@@ -1,0 +1,54 @@
+#include <game/Game.h>
+#include <game/Debug.h>
+
+#include <stdio.h>
+#include <string.h>
+#include <game/Accelerometer.h>
+
+void Init(struct Gamestate*);
+void OnEnter(struct Gamestate* state);
+void OnLeave(struct Gamestate* state);
+void Update(uint32_t);
+void Draw(Bitmap *);
+
+Gamestate InitState = { Init, OnEnter, OnLeave, Update, Draw };
+Game* TheGame = &(Game) {&InitState};
+
+void Init(struct Gamestate* state)
+{
+//0 = unten, 1=links, 2=oben, 3=rechts
+	
+	InitializeAccelerometer();
+	printf("Init Accelerometer: %s\r\n", PingAccelerometer() > 0 ? "OKAY" : "FAILED");
+	CalibrateAccelerometer();
+}
+
+void OnEnter(struct Gamestate* state)
+{
+
+}
+
+void OnLeave(struct Gamestate* state)
+{
+}
+
+void Update(uint32_t a)
+{
+	int8_t components[3];
+	int LED = 0;
+	ReadCalibratedAccelerometerData(components);
+	if (components[0] > 10)
+		LED |= (1<<3);
+	if (components[0] < 10)
+		LED |= (1<<1);
+	if (components[1] > 10)
+		LED |= (1<<2);
+	if (components[1] < 10)
+		LED |= (1<<0);
+	SetLEDs(LED);
+	//if components[2]) >0
+}
+
+void Draw(Bitmap *b)
+{
+}
