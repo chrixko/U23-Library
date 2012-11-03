@@ -49,13 +49,14 @@ void Menu_Update(uint32_t delta)
 {
 
 	snes_button_state_t state = GetControllerState1();
+	pushbutton_button_state_t buttonsState = GetPushbuttonState();
 	if (SysTickCounter-lastMenuUpdate > 30)
 		{
-		if (state.buttons.Up) {
+		if (state.buttons.Up || buttonsState.Up) {
 			lastMenuUpdate = SysTickCounter;
 			selectedIndex += 3;
 			selectedIndex -= 1;
-		} else if (state.buttons.Down) {
+		} else if (state.buttons.Down || buttonsState.Down) {
 			lastMenuUpdate = SysTickCounter;
 			selectedIndex += 1;
 		}
@@ -63,7 +64,7 @@ void Menu_Update(uint32_t delta)
 
 	selectedIndex = selectedIndex%numberOfIndexes;
 
-	if (state.buttons.Start || state.buttons.A)
+	if (state.buttons.Start || buttonsState.A)
 	{
 		switch(selectedIndex) {
 			case 0:
