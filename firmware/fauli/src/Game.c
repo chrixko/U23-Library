@@ -13,7 +13,7 @@ void Draw(Bitmap *);
 Gamestate InitState = { Init, NULL, NULL, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
-struct {int xpos; int ypos; int animation; int hp; int dmg;} katze = { 0,150, 0,100,5 };
+struct {int xpos; int ypos; int animation; int hp; int dmg; int nextFrameCounter; int timeToNextFrame;} katze = { 0,150, 0,100,5, 0, 10};
 
 void Init(struct Gamestate* state) {}
 void Update(uint32_t tick) {
@@ -47,8 +47,16 @@ void Update(uint32_t tick) {
 			katze.xpos++;/* code */
 		}
 	}
-	katze.animation+= (SysTickCounter%10 == 0);
-	katze.animation = katze.animation % 6;
+	
+	katze.nextFrameCounter++;
+    if (katze.nextFrameCounter >= katze.timeToNextFrame)
+    {
+    	katze.animation++;
+    	katze.nextFrameCounter = 0;
+	}
+	if (katze.animation >= 6) {
+	    katze.animation = 0;
+	}
 }
 
 void Draw(Bitmap* surface)
