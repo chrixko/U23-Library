@@ -23,11 +23,11 @@ void Entity_Update(struct Entity* entity)
 	}
 }
 
-void Entity_Draw(struct Entity* entity)
+void Entity_Draw(struct Entity* entity, Bitmap* surface)
 {
 	if(entity->draw != 0)
 	{
-		entity->draw(entity->context);
+		entity->draw(entity->context, surface);
 	}
 }
 

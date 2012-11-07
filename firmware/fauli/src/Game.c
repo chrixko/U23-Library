@@ -72,7 +72,7 @@ void Update(uint32_t tick)
 
 void Draw(Bitmap* surface)
 {
-	Entity_Draw(player->entity);
+	Entity_Draw(player->entity, surface);
 	
     const RLEBitmap * animationStep = nukular[katze.animation];
 

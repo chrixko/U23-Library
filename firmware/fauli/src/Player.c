@@ -1,3 +1,5 @@
+#include <game/Game.h>
+
 #include <Entity.h>
 #include <Player.h>
 
@@ -14,12 +16,19 @@ struct Player* Player_Create()
 	return player;	
 }
 
+void Player_processInput(struct Player* player)
+{
+	//TODO: Decide by PlayerType wether to poll State1 or 2
+	snes_button_state_t state = GetControllerState1();
+}
+
 void Player_Update(void* player)
 {
 	//Player updating
+	Player_processInput((struct Player*)player);
 }
 
-void Player_Draw(void* player)
+void Player_Draw(void* player, Bitmap* surface)
 {
 	//Player_Drawing
 }
