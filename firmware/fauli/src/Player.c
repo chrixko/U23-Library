@@ -5,9 +5,8 @@
 
 struct Player* Player_Create()
 {
-	struct Player* player = 0;
+	struct Player* player = (struct Player*)malloc(sizeof(struct Player));
 	
-	player = (struct Player*)malloc(sizeof(struct Player));
 	player->entity = Entity_Create(player);
 	player->entity->update = Player_Update;
 	player->entity->draw = Player_Draw;

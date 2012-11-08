@@ -2,22 +2,21 @@
 
 struct Entity* Entity_Create(void* context)
 {
-	struct Entity* entity = 0;
+	struct Entity* entity = (struct Entity*)malloc(sizeof(struct Entity));	
 	
-	entity = (struct Entity*)malloc(sizeof(struct Entity));
 	entity->posX = 0;
 	entity->posY = 0;
 	
 	entity->context = context;
-	entity->update = 0;
-	entity->draw = 0;
+	entity->update = NULL;
+	entity->draw = NULL;
 		
 	return entity;
 }
 
 void Entity_Update(struct Entity* entity)
 {
-	if(entity->update != 0)
+	if(entity->update != NULL)
 	{
 		entity->update(entity->context);
 	}
@@ -25,7 +24,7 @@ void Entity_Update(struct Entity* entity)
 
 void Entity_Draw(struct Entity* entity, Bitmap* surface)
 {
-	if(entity->draw != 0)
+	if(entity->draw != NULL)
 	{
 		entity->draw(entity->context, surface);
 	}
