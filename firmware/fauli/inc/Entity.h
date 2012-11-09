@@ -2,6 +2,7 @@
 #define __ENTITY_H__
 
 #include <stdlib.h>
+#include <RLEBitmap.h>
 #include <game/Game.h>
 
 struct Entity
