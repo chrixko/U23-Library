@@ -18,8 +18,6 @@ Game* TheGame = &(Game) {&InitState};
 
 struct Player* player;
 
-//struct {int xpos; int ypos; int animation; int hp; int dmg; int nextFrameCounter; int timeToNextFrame;} katze = { 0,150, 0,100,5, 0, 10};
-
 void Init(struct Gamestate* state) 
 {
 	player = Player_Create();
