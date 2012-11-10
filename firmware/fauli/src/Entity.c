@@ -6,6 +6,10 @@ struct Entity* Entity_Create(void* context)
 	
 	entity->posX = 0;
 	entity->posY = 0;
+	entity->vX = 0;
+	entity->vY = 0;
+	
+	//entity->animation = NULL;
 	
 	entity->context = context;
 	entity->update = NULL;
@@ -17,7 +21,7 @@ struct Entity* Entity_Create(void* context)
 void Entity_Update(struct Entity* entity)
 {
 	if(entity->update != NULL)
-	{
+	{		
 		entity->update(entity->context);
 	}
 }

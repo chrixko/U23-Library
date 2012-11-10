@@ -9,6 +9,10 @@ struct Entity
 {
 	int posX;
 	int posY;
+	
+	int vX;
+	int vY;
+	
 	void* context;
 	void (*update)(void*);
 	void (*draw)(void*, Bitmap*);
