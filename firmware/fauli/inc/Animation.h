@@ -17,4 +17,6 @@ struct Animation
 struct Animation* Animation_Create(char* name, int start, int end, int frameCountToNextFrame);
 void Animation_Play(struct Animation* animation);
 
+void Animation_Destroy(struct Animation* animation);
+
 #endif

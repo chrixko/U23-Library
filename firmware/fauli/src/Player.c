@@ -30,8 +30,6 @@ void Player_processInput(struct Player* player)
 	//TODO: Decide by PlayerType wether to poll State1 or 2
 	snes_button_state_t state = GetControllerState1();
 	
-	
-	
 	if(state.buttons.Up)
 	{
 		player->entity->vY = -1;
@@ -55,6 +53,7 @@ void Player_processInput(struct Player* player)
 
 void Player_moveBy(struct Player* player, int x, int y)
 {
+	//TODO:Collision detection
 	struct Entity* e = player->entity;
 	int desiredX = e->posX + x;
 	int desiredY = e->posY + y;
@@ -71,8 +70,7 @@ void Player_moveBy(struct Player* player, int x, int y)
 }
 
 void Player_Update(void* player)
-{
-	//Player updating
+{	
 	struct Player* p = player;
 	p->entity->vX = p->entity->vY = 0;
 	
@@ -86,8 +84,7 @@ void Player_Update(void* player)
 	else
 	{
 		p->currentAnimationIndex = 1;
-	}
-	
+	}	
 }
 
 struct Animation* Player_getCurrentAnimation(struct Player* player)
@@ -107,5 +104,8 @@ void Player_Draw(void* player, Bitmap* surface)
 void Player_Destroy(struct Player* player)
 {
 	Entity_Destroy(player->entity);
+	Animation_Destroy(player->animations[0]);
+	Animation_Destroy(player->animations[1]);
+	
 	free(player);
 }

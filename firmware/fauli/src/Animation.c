@@ -31,3 +31,8 @@ void Animation_Play(struct Animation* animation)
 		animation->frameCounter++;
 	}
 }
+
+void Animation_Destroy(struct Animation* animation)
+{
+	free(animation);
+}
