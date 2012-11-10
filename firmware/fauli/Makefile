@@ -2,7 +2,7 @@
 TARGET = fauli
 
 # List C source files here.
-CCSOURCES = Game.c bilder.c
+CCSOURCES = Game.c bilder.c Vector.c
 
 # Additional local static libs to link against
 LIBS = gaming stm32f4xx fatfs sdcard graphics
