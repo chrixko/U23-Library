@@ -4,6 +4,7 @@
 *.a
 *.o
 *.d
+*~
 obj
 *.sublime-workspace
 libs/libgraphics/Tools/*.png
