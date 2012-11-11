@@ -29,6 +29,6 @@ void Update(uint32_t tick)
 
 void Draw(Bitmap* surface)
 {
-	DrawRLEBitmap(surface, &bg_lab, 0, 0);
+	DrawRLEBitmap(surface, &bg_lab, player->entity->posX *-1, 0);
 	Entity_Draw(player->entity, surface);	
 }

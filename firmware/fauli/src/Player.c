@@ -58,7 +58,7 @@ void Player_moveBy(struct Player* player, int x, int y)
 	int desiredX = e->posX + x;
 	int desiredY = e->posY + y;
 	
-	if((desiredX >= 0) && (desiredX <= 320-51))
+	if((desiredX >= 0) && (desiredX <= 3200-51))
 	{
 		e->posX = desiredX;
 	}
@@ -98,7 +98,7 @@ void Player_Draw(void* player, Bitmap* surface)
 	struct Animation* anim = Player_getCurrentAnimation(p);
 	Animation_Play(anim);
 	
-	DrawRLEBitmap(surface, nukular[anim->currentFrameIndex], p->entity->posX, p->entity->posY);
+	DrawRLEBitmap(surface, nukular[anim->currentFrameIndex], 150, p->entity->posY);
 }
 
 void Player_Destroy(struct Player* player)
