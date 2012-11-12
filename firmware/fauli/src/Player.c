@@ -25,7 +25,7 @@ struct Player* Player_Create()
 	return player;	
 }
 
-void Player_processInput(struct Player* player)
+void _Player_processInput(struct Player* player)
 {
 	//TODO: Decide by PlayerType wether to poll State1 or 2
 	snes_button_state_t state = GetControllerState1();
@@ -51,7 +51,7 @@ void Player_processInput(struct Player* player)
 	}			
 }
 
-void Player_moveBy(struct Player* player, int x, int y)
+void _Player_moveBy(struct Player* player, int x, int y)
 {
 	//TODO:Collision detection
 	struct Entity* e = player->entity;
@@ -74,8 +74,8 @@ void Player_Update(void* player)
 	struct Player* p = player;
 	p->entity->vX = p->entity->vY = 0;
 	
-	Player_processInput(p);
-	Player_moveBy(p, p->entity->vX, p->entity->vY);
+	_Player_processInput(p);
+	_Player_moveBy(p, p->entity->vX, p->entity->vY);
 	
 	if((p->entity->vX != 0) || (p->entity->vY != 0))
 	{
@@ -87,7 +87,7 @@ void Player_Update(void* player)
 	}	
 }
 
-struct Animation* Player_getCurrentAnimation(struct Player* player)
+struct Animation* _Player_getCurrentAnimation(struct Player* player)
 {
 	return player->animations[player->currentAnimationIndex];
 }
@@ -95,7 +95,7 @@ struct Animation* Player_getCurrentAnimation(struct Player* player)
 void Player_Draw(void* player, Bitmap* surface)
 {
 	struct Player* p = player;
-	struct Animation* anim = Player_getCurrentAnimation(p);
+	struct Animation* anim = _Player_getCurrentAnimation(p);
 	Animation_Play(anim);
 	
 	DrawRLEBitmap(surface, nukular[anim->currentFrameIndex], 150, p->entity->posY);

@@ -13,13 +13,11 @@ struct Player
 };
 
 struct Player* Player_Create();
-
-struct Animation* Player_getCurrentAnimation(struct Player* player);
-void Player_processInput(struct Player* player);
-void Player_moveBy(struct Player* player, int x, int y);
-
 void Player_Update(void* player);
 void Player_Draw(void* player, Bitmap* surface);
 void Player_Destroy(struct Player* player);
 
+struct Animation* _Player_getCurrentAnimation(struct Player* player);
+void _Player_processInput(struct Player* player);
+void _Player_moveBy(struct Player* player, int x, int y);
 #endif
