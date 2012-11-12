@@ -8,6 +8,8 @@ Entity* Entity_Create(void* context)
 	entity->posY = 0;
 	entity->vX = 0;
 	entity->vY = 0;
+	entity->scrollX = 1;
+	entity->scrollY = 1;
 	
 	//entity->animation = NULL;
 	

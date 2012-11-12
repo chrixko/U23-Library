@@ -13,6 +13,9 @@ typedef struct
 	int vX;
 	int vY;
 	
+	int scrollX;
+	int scrollY;
+	
 	void* context;
 	void (*update)(void*);
 	void (*draw)(void*, Bitmap*);

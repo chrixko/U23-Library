@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 #include <game/Game.h>
+#include <Constants.h>
 #include <Animation.h>
 #include <bilder.h>
 
@@ -98,7 +99,7 @@ void Player_Draw(void* player, Bitmap* surface)
 	Animation* anim = _Player_getCurrentAnimation(p);
 	Animation_Play(anim);
 	
-	DrawRLEBitmap(surface, Sprite_LaserCat[anim->currentFrameIndex], 150, p->entity->posY);
+	DrawRLEBitmap(surface, Sprite_LaserCat[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY - camera->posY);
 }
 
 void Player_Destroy(Player* player)
