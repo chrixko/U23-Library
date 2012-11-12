@@ -16,6 +16,7 @@ Entity* Entity_Create(void* context)
 	entity->context = context;
 	entity->update = NULL;
 	entity->draw = NULL;
+	entity->destroy = NULL;
 	entity->destroyed = false;
 		
 	return entity;
@@ -39,5 +40,8 @@ void Entity_Draw(Entity* entity, Bitmap* surface)
 
 void Entity_Destroy(Entity* entity)
 {
+    if (entity->destroy != NULL) {
+        entity->destroy(entity->context);
+    }
 	free(entity);
 }
