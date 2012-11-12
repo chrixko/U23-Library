@@ -47,6 +47,7 @@ void Update(uint32_t tick)
 	    Entity* it = Vector_Get(&entities, i);
 	    if (it != NULL) {
 	        if (it->destroyed) {
+    	        Entity_Destroy(it);
 	            Vector_Set(&entities, i, NULL);
 	        } else {
     	        Entity_Update(it);
