@@ -19,12 +19,12 @@ typedef struct {
 } Vector;
 
 // public
-void Vector_init(Vector* this);
-void Vector_addElement(Vector* this, ElementType element);
-void Vector_shrinkCache(Vector* this, bool maximumShrink);
-ElementType Vector_get(Vector* this, unsigned int i);
-void Vector_set(Vector* this, unsigned int i, ElementType element);
+void Vector_Init(Vector* this);
+void Vector_AddElement(Vector* this, ElementType element);
+void Vector_ShrinkCache(Vector* this, bool maximumShrink);
+ElementType Vector_Get(Vector* this, unsigned int i);
+void Vector_Set(Vector* this, unsigned int i, ElementType element);
 // private
-void _Vector_addElementWithoutSizeCheck(Vector* this, ElementType element);
-void _Vector_recreateWithoutSizeCheck(Vector* this, unsigned int newallocatedElements);
+void _Vector_AddElementWithoutSizeCheck(Vector* this, ElementType element);
+void _Vector_RecreateWithoutSizeCheck(Vector* this, unsigned int newallocatedElements);
 #endif
