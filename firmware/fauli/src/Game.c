@@ -41,6 +41,7 @@ void Init(struct Gamestate* state)
 	player = Player_Create();
 	Game_AddEntity(player->entity);
 }
+
 void Update(uint32_t tick) 
 {
 	for (unsigned int i=0; i < entities.usedElements; ++i) {
@@ -59,5 +60,11 @@ void Update(uint32_t tick)
 void Draw(Bitmap* surface)
 {
 	DrawRLEBitmap(surface, &bg_lab, player->entity->posX *-1, 0);
-	Entity_Draw(player->entity, surface);	
+
+	for (unsigned int i=0; i < entities.usedElements; ++i) {
+	    Entity* it = Vector_Get(&entities, i);
+	    if (it != NULL) {
+    	    Entity_Draw(it, surface);
+	    }
+	}
 }
