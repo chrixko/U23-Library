@@ -16,7 +16,7 @@ void Draw(Bitmap *);
 Gamestate InitState = { Init, NULL, NULL, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
-struct Player* player;
+Player* player;
 
 void Init(struct Gamestate* state) 
 {

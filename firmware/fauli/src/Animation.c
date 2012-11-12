@@ -1,9 +1,9 @@
 #include <Animation.h>
 #include <stdlib.h>
 
-struct Animation* Animation_Create(char* name, int start, int end, int frameCountToNextFrame)
+Animation* Animation_Create(char* name, int start, int end, int frameCountToNextFrame)
 {
-	struct Animation* anim = (struct Animation*)malloc(sizeof(struct Animation));
+	Animation* anim = (Animation*)malloc(sizeof(Animation));
 	anim->name = name;
 	anim->startIndex = start;
 	anim->endIndex = end;
@@ -14,7 +14,7 @@ struct Animation* Animation_Create(char* name, int start, int end, int frameCoun
 	return anim;
 }
 
-void Animation_Play(struct Animation* animation)
+void Animation_Play(Animation* animation)
 {
 	if(animation->frameCounter >= animation->frameCountToNextFrame)
 	{
@@ -32,7 +32,7 @@ void Animation_Play(struct Animation* animation)
 	}
 }
 
-void Animation_Destroy(struct Animation* animation)
+void Animation_Destroy(Animation* animation)
 {
 	free(animation);
 }

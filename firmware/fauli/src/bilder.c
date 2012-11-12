@@ -1,6 +1,6 @@
 #include <RLEBitmap.h>
 
-const RLEBitmap * const nukular[6]=
+const RLEBitmap * const Sprite_LaserCat[6]=
 {
 	(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(1048,61,34)]; }) {
 		{ 46,34 },

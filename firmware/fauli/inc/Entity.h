@@ -5,7 +5,7 @@
 #include <RLEBitmap.h>
 #include <game/Game.h>
 
-struct Entity
+typedef struct 
 {
 	int posX;
 	int posY;
@@ -16,12 +16,12 @@ struct Entity
 	void* context;
 	void (*update)(void*);
 	void (*draw)(void*, Bitmap*);
-};
+} Entity;
 
-struct Entity* Entity_Create(void* context);
+Entity* Entity_Create(void* context);
 
-void Entity_Update(struct Entity* entity);
-void Entity_Draw(struct Entity* entity, Bitmap* surface);
-void Entity_Destroy(struct Entity* entity);
+void Entity_Update(Entity* entity);
+void Entity_Draw(Entity* entity, Bitmap* surface);
+void Entity_Destroy(Entity* entity);
 
 #endif

@@ -3,7 +3,7 @@
 
 #include <RLEBitmap.h>
 
-extern const RLEBitmap * const nukular[6];
+extern const RLEBitmap * const Sprite_LaserCat[6];
 extern const RLEBitmap bg_lab;
 
 #endif

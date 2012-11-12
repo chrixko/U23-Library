@@ -6,9 +6,9 @@
 #include <Animation.h>
 #include <bilder.h>
 
-struct Player* Player_Create()
+Player* Player_Create()
 {
-	struct Player* player = (struct Player*)malloc(sizeof(struct Player));
+	Player* player = (Player*)malloc(sizeof(Player));
 	
 	player->entity = Entity_Create(player);
 	player->entity->posY = 150;	
@@ -25,7 +25,7 @@ struct Player* Player_Create()
 	return player;	
 }
 
-void _Player_processInput(struct Player* player)
+void _Player_processInput(Player* player)
 {
 	//TODO: Decide by PlayerType wether to poll State1 or 2
 	snes_button_state_t state = GetControllerState1();
@@ -51,10 +51,10 @@ void _Player_processInput(struct Player* player)
 	}			
 }
 
-void _Player_moveBy(struct Player* player, int x, int y)
+void _Player_moveBy(Player* player, int x, int y)
 {
 	//TODO:Collision detection
-	struct Entity* e = player->entity;
+	Entity* e = player->entity;
 	int desiredX = e->posX + x;
 	int desiredY = e->posY + y;
 	
@@ -71,7 +71,7 @@ void _Player_moveBy(struct Player* player, int x, int y)
 
 void Player_Update(void* player)
 {	
-	struct Player* p = player;
+	Player* p = player;
 	p->entity->vX = p->entity->vY = 0;
 	
 	_Player_processInput(p);
@@ -87,21 +87,21 @@ void Player_Update(void* player)
 	}	
 }
 
-struct Animation* _Player_getCurrentAnimation(struct Player* player)
+Animation* _Player_getCurrentAnimation(Player* player)
 {
 	return player->animations[player->currentAnimationIndex];
 }
 
 void Player_Draw(void* player, Bitmap* surface)
 {
-	struct Player* p = player;
-	struct Animation* anim = _Player_getCurrentAnimation(p);
+	Player* p = player;
+	Animation* anim = _Player_getCurrentAnimation(p);
 	Animation_Play(anim);
 	
-	DrawRLEBitmap(surface, nukular[anim->currentFrameIndex], 150, p->entity->posY);
+	DrawRLEBitmap(surface, Sprite_LaserCat[anim->currentFrameIndex], 150, p->entity->posY);
 }
 
-void Player_Destroy(struct Player* player)
+void Player_Destroy(Player* player)
 {
 	Entity_Destroy(player->entity);
 	Animation_Destroy(player->animations[0]);

@@ -1,8 +1,8 @@
 #include <Entity.h>
 
-struct Entity* Entity_Create(void* context)
+Entity* Entity_Create(void* context)
 {
-	struct Entity* entity = (struct Entity*)malloc(sizeof(struct Entity));	
+	Entity* entity = (Entity*)malloc(sizeof(Entity));	
 	
 	entity->posX = 0;
 	entity->posY = 0;
@@ -18,7 +18,7 @@ struct Entity* Entity_Create(void* context)
 	return entity;
 }
 
-void Entity_Update(struct Entity* entity)
+void Entity_Update(Entity* entity)
 {
 	if(entity->update != NULL)
 	{		
@@ -26,7 +26,7 @@ void Entity_Update(struct Entity* entity)
 	}
 }
 
-void Entity_Draw(struct Entity* entity, Bitmap* surface)
+void Entity_Draw(Entity* entity, Bitmap* surface)
 {
 	if(entity->draw != NULL)
 	{
@@ -34,7 +34,7 @@ void Entity_Draw(struct Entity* entity, Bitmap* surface)
 	}
 }
 
-void Entity_Destroy(struct Entity* entity)
+void Entity_Destroy(Entity* entity)
 {
 	free(entity);
 }
