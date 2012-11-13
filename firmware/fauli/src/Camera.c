@@ -12,6 +12,14 @@ Camera* Camera_Create(int posX, int posY)
 
 void Camera_FocusOnEntity(Camera* this, Entity* target)
 {
-	this->posX = target->posX - (SCREEN_WIDTH / 1.5);
-	this->posY = target->posY - (SCREEN_HEIGHT / 2);
+	int desiredX = target->posX - (SCREEN_WIDTH / 3);
+	int desiredY = target->posY - (SCREEN_HEIGHT / 2);
+	if(desiredX >= 0)
+	{
+		this->posX = desiredX;
+	}
+	if(desiredY >= 0)
+	{
+		this->posY = desiredY;
+	}	
 }

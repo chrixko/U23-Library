@@ -12,7 +12,11 @@ Player* Player_Create()
 	Player* player = (Player*)malloc(sizeof(Player));
 	
 	player->entity = Entity_Create(player);
-	player->entity->posY = 150;	
+	player->entity->posY = 80;
+	
+	player->entity->width = 47;
+	player->entity->height = 71;	
+	
 	player->entity->update = Player_Update;
 	player->entity->draw = Player_Draw;	
 	
@@ -64,7 +68,7 @@ void _Player_moveBy(Player* player, int x, int y)
 		e->posX = desiredX;
 	}
 	
-	if((desiredY >= 100) && (desiredY <= 200-34))
+	if((desiredY >= ((SCREEN_WIDTH - FLOOR_HEIGHT) - 71)) && (desiredY <= 200-71))
 	{
 		e->posY = desiredY;
 	}	
@@ -99,7 +103,7 @@ void Player_Draw(void* player, Bitmap* surface)
 	Animation* anim = _Player_getCurrentAnimation(p);
 	Animation_Play(anim);
 	
-	DrawRLEBitmap(surface, Sprite_LaserCat[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY - camera->posY);
+	DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
 }
 
 void Player_Destroy(Player* player)

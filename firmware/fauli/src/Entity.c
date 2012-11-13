@@ -10,12 +10,16 @@ Entity* Entity_Create(void* context)
 	entity->vY = 0;
 	entity->scrollX = 1;
 	entity->scrollY = 1;
-	
-	//entity->animation = NULL;
+	entity->width = 0;
+	entity->height = 0;
+	entity->offsetX = 0;
+	entity->offsetY = 0;	
 	
 	entity->context = context;
 	entity->update = NULL;
 	entity->draw = NULL;	
+	entity->destroy = NULL;
+	entity->destroyed = false;
 		
 	return entity;
 }
@@ -38,5 +42,8 @@ void Entity_Draw(Entity* entity, Bitmap* surface)
 
 void Entity_Destroy(Entity* entity)
 {
+    if (entity->destroy != NULL) {
+        entity->destroy(entity->context);
+    }
 	free(entity);
 }

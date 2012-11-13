@@ -16,9 +16,16 @@ typedef struct
 	int scrollX;
 	int scrollY;
 	
+	int width;
+	int offsetX;
+	int height;
+	int offsetY;	
+	
 	void* context;
 	void (*update)(void*);
 	void (*draw)(void*, Bitmap*);
+	void (*destroy)(void*);
+	bool destroyed;	
 } Entity;
 
 Entity* Entity_Create(void* context);

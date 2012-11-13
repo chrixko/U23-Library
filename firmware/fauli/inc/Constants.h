@@ -5,6 +5,7 @@
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 200
+#define FLOOR_HEIGHT 80
 Camera* camera;
 
 #endif
