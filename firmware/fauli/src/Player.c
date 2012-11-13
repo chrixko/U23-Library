@@ -69,7 +69,7 @@ void _Player_moveBy(Player* player, int x, int y)
 		e->posX = desiredX;
 	}
 	
-	if((desiredY >= ((SCREEN_WIDTH - FLOOR_HEIGHT) - 71)) && (desiredY <= 200-71))
+	if((desiredY >= ((SCREEN_HEIGHT - FLOOR_HEIGHT) - 71)) && (desiredY <= 200-71))
 	{
 		e->posY = desiredY;
 	}	
