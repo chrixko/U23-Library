@@ -18,7 +18,8 @@ Player* Player_Create()
 	player->entity->height = 71;	
 	
 	player->entity->update = Player_Update;
-	player->entity->draw = Player_Draw;	
+	player->entity->draw = Player_Draw;
+	player->entity->destroy = Player_Destroy;
 	
 	player->currentAnimationIndex = 0;
 	
@@ -106,11 +107,11 @@ void Player_Draw(void* player, Bitmap* surface)
 	DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
 }
 
-void Player_Destroy(Player* player)
+void Player_Destroy(void* player)
 {
-	Entity_Destroy(player->entity);
-	Animation_Destroy(player->animations[0]);
-	Animation_Destroy(player->animations[1]);
+    Player* p = player;
+	Animation_Destroy(p->animations[0]);
+	Animation_Destroy(p->animations[1]);
 	
-	free(player);
+	free(p);
 }

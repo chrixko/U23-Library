@@ -17,7 +17,7 @@ Entity* Entity_Create(void* context)
 	
 	entity->context = context;
 	entity->update = NULL;
-	entity->draw = NULL;	
+	entity->draw = NULL;
 	entity->destroy = NULL;
 	entity->destroyed = false;
 		

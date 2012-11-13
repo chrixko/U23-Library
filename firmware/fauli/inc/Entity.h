@@ -25,7 +25,7 @@ typedef struct
 	void (*update)(void*);
 	void (*draw)(void*, Bitmap*);
 	void (*destroy)(void*);
-	bool destroyed;	
+	bool destroyed;
 } Entity;
 
 Entity* Entity_Create(void* context);

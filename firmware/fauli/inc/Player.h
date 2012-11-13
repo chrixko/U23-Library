@@ -15,7 +15,7 @@ typedef struct
 Player* Player_Create();
 void Player_Update(void* player);
 void Player_Draw(void* player, Bitmap* surface);
-void Player_Destroy(Player* player);
+void Player_Destroy(void* player);
 
 Animation* _Player_getCurrentAnimation(Player* player);
 void _Player_processInput(Player* player);
