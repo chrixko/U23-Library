@@ -38,6 +38,7 @@ void Game_AddEntity(Entity* entity) {
 
 void Init(struct Gamestate* state) 
 {
+	camera = Camera_Create(0,0);
 	player = Player_Create();
 	Game_AddEntity(player->entity);
 }
@@ -60,7 +61,7 @@ void Update(uint32_t tick)
 
 void Draw(Bitmap* surface)
 {
-	DrawRLEBitmap(surface, &bg_lab, player->entity->posX * -1, 0);
+	DrawRLEBitmap(surface, &bg_lab, camera->posX * -1, 0);
 	
 	for (unsigned int i=0; i < entities.usedElements; ++i) {
 	    Entity* it = Vector_Get(&entities, i);

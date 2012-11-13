@@ -104,8 +104,7 @@ void Player_Draw(void* player, Bitmap* surface)
 	Animation* anim = _Player_getCurrentAnimation(p);
 	Animation_Play(anim);
 	
-	DrawRLEBitmap(surface, Sprite_LaserCat[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
-	//DrawRLEBitmap(surface, Sprite_LaserCat[anim->currentFrameIndex], 150, p->entity->posY);
+	DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);	
 }
 
 void Player_Destroy(void* player)
