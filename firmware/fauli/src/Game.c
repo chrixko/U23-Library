@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <string.h>
-
+#include <Constants.h>
 #include <bilder.h>
 #include <Entity.h>
 #include <Player.h>
@@ -55,12 +55,13 @@ void Update(uint32_t tick)
 	        }
 	    }
 	}
+	Camera_FocusOnEntity(camera, player->entity);
 }
 
 void Draw(Bitmap* surface)
 {
-	DrawRLEBitmap(surface, &bg_lab, player->entity->posX *-1, 0);
-
+	DrawRLEBitmap(surface, &bg_lab, player->entity->posX * -1, 0);
+	
 	for (unsigned int i=0; i < entities.usedElements; ++i) {
 	    Entity* it = Vector_Get(&entities, i);
 	    if (it != NULL) {
