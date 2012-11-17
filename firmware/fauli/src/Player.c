@@ -28,6 +28,8 @@ Player* Player_Create()
 	
 	player->health = 100;
 	
+	player->weapon = Weapon_Create(player->entity);
+	
 	return player;	
 }
 
@@ -55,6 +57,18 @@ void _Player_processInput(Player* player)
 	{
 		player->entity->vX = 1;
 	}			
+	
+	if(state.buttons.L) {
+	    Weapon_Rotate(player->weapon, -0.1);
+	}
+	
+	if(state.buttons.R) {
+	    Weapon_Rotate(player->weapon, 0.1);
+	}
+	
+	if(state.buttons.A) {
+	    Player_Shoot(player);
+	}
 }
 
 void _Player_moveBy(Player* player, int x, int y)
@@ -83,6 +97,10 @@ void Player_Update(void* player)
 	_Player_processInput(p);
 	_Player_moveBy(p, p->entity->vX, p->entity->vY);
 	
+	if (p->weapon != NULL) {
+	    Entity_Update(p->weapon->entity);
+	}
+	
 	if((p->entity->vX != 0) || (p->entity->vY != 0))
 	{
 		p->currentAnimationIndex = 0;
@@ -90,7 +108,13 @@ void Player_Update(void* player)
 	else
 	{
 		p->currentAnimationIndex = 1;
-	}	
+	}
+}
+
+void Player_Shoot(Player* player) {
+    if (player->weapon) {
+        Weapon_Shoot(player->weapon);
+    }
 }
 
 Animation* _Player_getCurrentAnimation(Player* player)
@@ -112,6 +136,9 @@ void Player_Destroy(void* player)
     Player* p = player;
 	Animation_Destroy(p->animations[0]);
 	Animation_Destroy(p->animations[1]);
+    if (p->weapon) {
+    	Entity_Destroy(p->weapon->entity);
+	}
 	
 	free(p);
 }

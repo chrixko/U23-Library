@@ -3,6 +3,7 @@
 
 #include <Entity.h>
 #include <Animation.h>
+#include "Weapon.h"
 
 typedef struct
 {
@@ -10,12 +11,15 @@ typedef struct
 	Animation* animations[2];
 	int currentAnimationIndex;
 	int health;
+	Weapon* weapon;
 } Player;
 
 Player* Player_Create();
 void Player_Update(void* player);
 void Player_Draw(void* player, Bitmap* surface);
 void Player_Destroy(void* player);
+void Player_Shoot(Player* player);
+
 
 Animation* _Player_getCurrentAnimation(Player* player);
 void _Player_processInput(Player* player);
