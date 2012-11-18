@@ -28,8 +28,10 @@ typedef struct
 	void (*update)(void*);
 	void (*draw)(void*, Bitmap*);
 	void (*destroy)(void*);
+	void (*collision)(void* context, void* otherEntity);
 	bool destroyed;
 	
+	int collisionType;
     bool checkCollisionByPixel;
 	Bitmap* bitmap;
 } Entity;
@@ -38,6 +40,7 @@ Entity* Entity_Create(void* context);
 
 void Entity_Update(Entity* entity);
 void Entity_Draw(Entity* entity, Bitmap* surface);
+void Entity_Collision(Entity* entity, Entity* other);
 void Entity_Destroy(Entity* entity);
 
 bool Entity_CheckCollision(Entity* a, Entity* b);

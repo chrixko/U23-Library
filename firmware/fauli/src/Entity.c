@@ -22,8 +22,10 @@ Entity* Entity_Create(void* context)
 	entity->update = NULL;
 	entity->draw = NULL;
 	entity->destroy = NULL;
+	entity->collision = NULL;
 	
 	entity->destroyed = false;
+	entity->collisionType = 0;
 	entity->checkCollisionByPixel = false;
 	entity->bitmap = NULL;
 		
@@ -43,6 +45,14 @@ void Entity_Draw(Entity* entity, Bitmap* surface)
 	if(entity->draw != NULL)
 	{
 		entity->draw(entity->context, surface);
+	}
+}
+
+void Entity_Collision(Entity* entity, Entity* other)
+{
+	if(entity->collision != NULL)
+	{
+		entity->collision(entity->context, other);
 	}
 }
 
