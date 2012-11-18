@@ -21,6 +21,9 @@ typedef struct
 	int height;
 	int offsetY;	
 	
+	int health;
+	int maxHealth;
+	
 	void* context;
 	void (*update)(void*);
 	void (*draw)(void*, Bitmap*);

@@ -69,6 +69,18 @@ void _Player_processInput(Player* player)
 	if(state.buttons.A) {
 	    Player_Shoot(player);
 	}
+	
+	if(state.buttons.X) {
+	    if (player->entity->health < player->entity->maxHealth) {
+    	    player->entity->health += 1;
+	    }
+	}
+	
+	if(state.buttons.Y) {
+	    if (player->entity->health > 0) {
+    	    player->entity->health -= 1;
+	    }
+	}
 }
 
 void _Player_moveBy(Player* player, int x, int y)

@@ -9,6 +9,7 @@
 #include <Entity.h>
 #include <Player.h>
 #include <Vector.h>
+#include "Ui.h"
 
 void Init(struct Gamestate*);
 void Update(uint32_t);
@@ -18,6 +19,7 @@ Gamestate InitState = { Init, NULL, NULL, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
 Player* player;
+Ui* ui;
 Vector entities;
 
 void Game_AddEntity(Entity* entity) {
@@ -40,6 +42,7 @@ void Init(struct Gamestate* state)
 {
 	camera = Camera_Create(0,0);
 	player = Player_Create();
+	ui = Ui_Create(player->entity, NULL);
 	Game_AddEntity(player->entity);
 }
 
@@ -57,6 +60,7 @@ void Update(uint32_t tick)
 	    }
 	}
 	Camera_FocusOnEntity(camera, player->entity);
+	Ui_Update(ui);
 }
 
 void Draw(Bitmap* surface)
@@ -69,4 +73,5 @@ void Draw(Bitmap* surface)
     	    Entity_Draw(it, surface);
 	    }
 	}
+	Ui_Draw(ui, surface);
 }

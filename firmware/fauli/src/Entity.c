@@ -15,6 +15,9 @@ Entity* Entity_Create(void* context)
 	entity->offsetX = 0;
 	entity->offsetY = 0;	
 	
+	entity->health = 100;
+	entity->maxHealth = 100;
+	
 	entity->context = context;
 	entity->update = NULL;
 	entity->draw = NULL;
