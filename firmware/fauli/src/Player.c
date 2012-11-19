@@ -20,11 +20,15 @@ Player* Player_Create()
 	player->entity->update = Player_Update;
 	player->entity->draw = Player_Draw;
 	player->entity->destroy = Player_Destroy;
+	player->entity->collision = Player_Collision;
+	
+	player->entity->collisionType = COLLISION_TYPE_PLAYER;
+	player->entity->sceneCollision = true;
 	
 	player->currentAnimationIndex = 0;
 	
 	player->animations[0] = Animation_Create("walk_left", 0, 5, 10);
-	player->animations[1] = Animation_Create("idle", 0, 0, 0);
+	player->animations[1] = Animation_Create("idle", 6, 11, 10);
 	
 	player->health = 100;
 	
@@ -83,31 +87,12 @@ void _Player_processInput(Player* player)
 	}
 }
 
-void _Player_moveBy(Player* player, int x, int y)
-{
-	//TODO:Collision detection
-	Entity* e = player->entity;
-	int desiredX = e->posX + x;
-	int desiredY = e->posY + y;
-	
-	if((desiredX >= 0) && (desiredX <= 3200-51))
-	{
-		e->posX = desiredX;
-	}
-	
-	if((desiredY >= ((SCREEN_HEIGHT - FLOOR_HEIGHT) - 71)) && (desiredY <= 200-71))
-	{
-		e->posY = desiredY;
-	}	
-}
-
 void Player_Update(void* player)
 {	
 	Player* p = player;
 	p->entity->vX = p->entity->vY = 0;
 	
 	_Player_processInput(p);
-	_Player_moveBy(p, p->entity->vX, p->entity->vY);
 	
 	if (p->weapon != NULL) {
 	    Entity_Update(p->weapon->entity);
@@ -126,6 +111,17 @@ void Player_Update(void* player)
 void Player_Shoot(Player* player) {
     if (player->weapon) {
         Weapon_Shoot(player->weapon);
+    }
+}
+
+bool Player_Collision(void* context, void* otherEntity) {
+    Player* this = context;
+    Entity* other = otherEntity;
+    
+    if (other->collisionType == COLLISION_TYPE_BULLET) {
+        this->entity->health -= 10;
+        other->destroyed = true;
+        return false;
     }
 }
 

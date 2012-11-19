@@ -87,7 +87,7 @@ void Menu_Draw(Bitmap* surface)
 	ClearBitmap(surface);
 
 	setFont(fontwhite16);
-	
+
 	int y_rowheight = 20;
 	int y_offset=30;
 
@@ -105,7 +105,7 @@ void Menu_Draw(Bitmap* surface)
 char * TitleForIndex(int index) {
 	switch(index) {
 		case 0:
-			return "Start";	
+			return "Start";
 		case 1:
 			return "Highscore";
 		case 2:
