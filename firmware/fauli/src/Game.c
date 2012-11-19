@@ -9,6 +9,7 @@
 #include <Entity.h>
 #include <Player.h>
 #include <Vector.h>
+#include <Storyboard.h>
 #include "Ui.h"
 
 void Init(struct Gamestate*);
@@ -18,6 +19,7 @@ void Draw(Bitmap *);
 Gamestate InitState = { Init, NULL, NULL, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
+Storyboard* storyboard;
 Player* player;
 Ui* ui;
 Vector entities;
@@ -48,6 +50,8 @@ void Init(struct Gamestate* state)
 	player = Player_Create();
 	ui = Ui_Create(player->entity, NULL);
 	Game_AddEntity(player->entity);
+	storyboard = Storyboard_Create();
+	Game_AddEntity(storyboard->entity);
 }
 
 void Update(uint32_t tick) 
