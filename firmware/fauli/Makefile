@@ -2,7 +2,7 @@
 TARGET = fauli
 
 # List C source files here.
-CCSOURCES = Game.c bilder.c Entity.c Player.c Animation.c Vector.c CollisionDetection.c Camera.c Weapon.c Bullet.c Ui.c Healthbar.c Storyboard.c Scene.c Fonts.c 
+CCSOURCES = Game.c bilder.c Entity.c Player.c Animation.c Vector.c Camera.c Weapon.c Bullet.c Ui.c Healthbar.c Storyboard.c Scene.c LabScene.c Fonts.c 
 
 # Additional local static libs to link against
 LIBS = gaming stm32f4xx fatfs sdcard graphics
