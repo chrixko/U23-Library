@@ -24,7 +24,7 @@ Player* Player_Create()
 	player->currentAnimationIndex = 0;
 	
 	player->animations[0] = Animation_Create("walk_left", 0, 5, 10);
-	player->animations[1] = Animation_Create("idle", 0, 0, 0);
+	player->animations[1] = Animation_Create("idle", 6, 11, 10);
 	
 	player->health = 100;
 	
