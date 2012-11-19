@@ -97,12 +97,12 @@ void Entity_MoveBy(Entity* this, int x, int y)
 
     // background scene collision
     if (this->sceneCollision) {
-	    if(!(this->posX >= 0) || !(this->posX <= 3200-51))
+	    if((this->posX < 0) || (this->posX > 3200-51))
 	    {
 		    this->posX = oldX;
 	    }
 	
-	    if((this->posX < ((SCREEN_HEIGHT - FLOOR_HEIGHT) - 71)) || !(this->posY <= 200-71))
+	    if((this->posY < ((SCREEN_HEIGHT - FLOOR_HEIGHT) - 71)) || (this->posY > 200-71))
 	    {
 		    this->posY = oldY;
 	    }
@@ -114,7 +114,6 @@ void Entity_MoveBy(Entity* this, int x, int y)
 /*
  Collision
 */
-
 bool Entity_CheckCollision(Entity* a, Entity* b) {
     if ((a->checkCollisionByPixel || b->checkCollisionByPixel) && a->bitmap && b->bitmap) {
         return Entity_checkPixelCollision(a,b);
@@ -122,6 +121,7 @@ bool Entity_CheckCollision(Entity* a, Entity* b) {
     return Entity_checkRectCollision(a,b);
 }
 
+//TODO fix this. it doesn't work
 bool Entity_checkRectCollision(Entity* a, Entity* b) {
     return !(a->posX < b->posX + b->width) &&
            !(a->posX + a->width < b->posX) &&

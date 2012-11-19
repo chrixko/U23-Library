@@ -7,7 +7,8 @@ Bullet* Bullet_Create() {
     bullet->entity->update = Bullet_Update;
     bullet->entity->destroy = Bullet_Destroy;
     bullet->entity->draw = Bullet_Draw;
-    bullet->entity->collisionType = COLLISION_TYPE_BULLET;
+    bullet->entity->collision = Bullet_Collision;
+    bullet->entity->collisionType = COLLISION_TYPE_BULLET_PLAYER;
     
     bullet->damage = 1;
     bullet->maxLifeTime = 200;
@@ -33,5 +34,16 @@ void Bullet_Draw(void* bullet, Bitmap* surface) {
 
 void Bullet_Destroy(void* bullet) {
     Bullet* this = (Bullet*)bullet;
+}
+
+bool Bullet_Collision(void* bullet, void* otherEntity) {
+    Bullet* this = bullet;
+    Entity* other;
+    
+    if (other->collisionType == COLLISION_TYPE_ENEMY) {
+        this->entity->destroyed = true;
+        return true;
+    }
+    return false;
 }
 

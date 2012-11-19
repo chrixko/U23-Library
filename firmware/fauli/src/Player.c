@@ -6,6 +6,7 @@
 #include <Constants.h>
 #include <Animation.h>
 #include <bilder.h>
+#include "Bullet.h"
 
 Player* Player_Create()
 {
@@ -118,11 +119,10 @@ bool Player_Collision(void* context, void* otherEntity) {
     Player* this = context;
     Entity* other = otherEntity;
     
-    if (other->collisionType == COLLISION_TYPE_BULLET) {
-        this->entity->health -= 10;
-        other->destroyed = true;
-        return false;
+    if (other->collisionType == COLLISION_TYPE_BULLET_ENEMY) {
+        this->entity->health -= ((Bullet*)other->context)->damage;
     }
+    return false;
 }
 
 Animation* _Player_getCurrentAnimation(Player* player)
