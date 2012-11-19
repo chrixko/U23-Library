@@ -7,33 +7,37 @@
 void ReadHighscore(FILE *file);
 void ErrorHandler(FILE *file);
 void quick_sort (int *a, int n);
-void reverse(int32_t *array, int32_t n);
+void reverse(int *array, int n);
 
-static int32_t score[10];
+static int score[10];
 
-void WriteHighscore(int32_t newScore) {
+void WriteHighscore(int newScore) {
 	InitializeFilesystem();
 
 	//Open a file
-	FILE* file = fopen("0:h_space", "w+");
+	FILE* file = fopen("0:h_space", "r+");
 	if(!file) {
-		perror("fopen()");
-		ErrorHandler(file);
-		return;
+		fclose(file);
+		file = fopen("0:h_space", "w+");
+		if (!file)
+		{
+			perror("fopen()");
+			ErrorHandler(file);
+			return;
+		}
 	}
 
 	ReadHighscore(file);
 
-	if (newScore > score[0])
-	{
-		score[9] = newScore;
-		quick_sort((int *)score, 10);
-		//reverse(score, 10);
-	} else {
-		ErrorHandler(file);
-		return;
-	}
-
+	// if (newScore > score[0])
+	// {
+	// 	score[9] = newScore;
+	// 	// quick_sort(score, 10);
+	// 	// reverse(score, 10);
+	// } else {
+	// 	ErrorHandler(file);
+	// 	return;
+	// }
 
 	//Seek to start
 	int res = fseek(file, 0, SEEK_SET);
@@ -48,6 +52,8 @@ void WriteHighscore(int32_t newScore) {
 	//warum schleifen wenn man episch faul sein kann :)
 	asprintf(&highscoreBuf, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", score[0], score[1], score[2], score[3], score[4], score[5], score[6], score[7], score[8], score[9]);
 
+	printf("WRITE: %s\n", highscoreBuf);
+
 	res = fwrite(highscoreBuf, 1, strlen(highscoreBuf), file);
 	if(!res) {
 		perror("fwrite()");
@@ -57,13 +63,13 @@ void WriteHighscore(int32_t newScore) {
 
 	free(highscoreBuf);
 
-	//Close file
-	res = fclose(file);
-	if(res != 0) {
-		perror("fclose()");
-		ErrorHandler(file);
-		return;
-	}
+	// //Close file
+	// res = fclose(file);
+	// if(res != 0) {
+	// 	perror("fclose()");
+	// 	ErrorHandler(file);
+	// 	return;
+	// }
 }
 
 void GetHighscoreList(char **formattedString) {
@@ -78,6 +84,7 @@ void GetHighscoreList(char **formattedString) {
 	}
 
 	ReadHighscore(file);
+	reverse(score, 10);
 
 	// HAHAHHAHA
 	asprintf(formattedString,"\
@@ -108,10 +115,11 @@ void ReadHighscore(FILE *file) {
 			printf("EOF occured\r\n");
 		perror("fread()");
 	}
+	readcontent[res] = '\0';
 
-	reverse(score, 10);
+	printf("Read raw: %s\n", readcontent);
 
-	score[0] = atoi(strtok(readcontent, ","));
+	/*score[0] = atoi(strtok(readcontent, ","));
 	for (int i = 1; i < 10; ++i)
 	{
 		score[i] = atoi(strtok(NULL, ","));
@@ -121,7 +129,7 @@ void ReadHighscore(FILE *file) {
 		}
 	}
 
-	quick_sort((int *)score, 10);
+	quick_sort(score, 10);*/
 }
 
 void ErrorHandler(FILE *file) {
@@ -129,11 +137,10 @@ void ErrorHandler(FILE *file) {
 	if(res != 0) {
 		perror("fclose()");
 	}
-	printf("closed file: %x\r\n", res);
 	DeinitializeFilesystem();
 }
 
-void reverse(int32_t *array, int32_t n) {
+void reverse(int *array, int n) {
     int i = 0;
     while (i < n)
     {
