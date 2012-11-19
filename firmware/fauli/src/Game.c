@@ -38,6 +38,10 @@ void Game_AddEntity(Entity* entity) {
     }
 }
 
+Vector* Game_GetEntities() {
+    return &entities;
+}
+
 void Init(struct Gamestate* state) 
 {
 	camera = Camera_Create(0,0);

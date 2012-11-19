@@ -1,4 +1,6 @@
 #include <Entity.h>
+#include "Game.h"
+#include "Constants.h"
 
 Entity* Entity_Create(void* context)
 {
@@ -25,9 +27,11 @@ Entity* Entity_Create(void* context)
 	entity->collision = NULL;
 	
 	entity->destroyed = false;
-	entity->collisionType = 0;
+	
 	entity->checkCollisionByPixel = false;
 	entity->bitmap = NULL;
+	entity->collisionType = 0;
+	entity->sceneCollision = false;
 		
 	return entity;
 }
@@ -37,6 +41,9 @@ void Entity_Update(Entity* entity)
 	if(entity->update != NULL)
 	{		
 		entity->update(entity->context);
+	}
+	if (entity->vX != 0 || entity->vY != 0) {
+	    Entity_MoveBy(entity, entity->vX, entity->vY);
 	}
 }
 
@@ -48,12 +55,13 @@ void Entity_Draw(Entity* entity, Bitmap* surface)
 	}
 }
 
-void Entity_Collision(Entity* entity, Entity* other)
+bool Entity_Collision(Entity* entity, Entity* other)
 {
 	if(entity->collision != NULL)
 	{
-		entity->collision(entity->context, other);
+		return entity->collision(entity->context, other);
 	}
+	return true;
 }
 
 void Entity_Destroy(Entity* entity)
@@ -64,6 +72,42 @@ void Entity_Destroy(Entity* entity)
 	free(entity);
 }
 
+void Entity_MoveBy(Entity* this, int x, int y)
+{
+	int oldX = this->posX;
+	int oldY = this->posY;
+	
+	this->posX = this->posX + x;
+	this->posY = this->posY + y;
+	
+	// check collision
+	Vector* entities = Game_GetEntities();
+	for (unsigned int i=0; i < entities->usedElements; ++i) {
+	    Entity* it = Vector_Get(entities, i);
+	    if (it != NULL) {
+	        if (Entity_CheckCollision(this, it)) {
+	            if (Entity_Collision(this, it)) {
+	                this->posX = oldX;
+	                this->posY = oldY;
+	            }
+	            Entity_Collision(it, this); //TODO maybe don't do this
+	        }
+	    }
+	};
+
+    // background scene collision
+    if (this->sceneCollision) {
+	    if(!(this->posX >= 0) || !(this->posX <= 3200-51))
+	    {
+		    this->posX = oldX;
+	    }
+	
+	    if((this->posX < ((SCREEN_HEIGHT - FLOOR_HEIGHT) - 71)) || !(this->posY <= 200-71))
+	    {
+		    this->posY = oldY;
+	    }
+    }
+}
 
 
 

@@ -7,6 +7,7 @@ Bullet* Bullet_Create() {
     bullet->entity->update = Bullet_Update;
     bullet->entity->destroy = Bullet_Destroy;
     bullet->entity->draw = Bullet_Draw;
+    bullet->entity->collisionType = COLLISION_TYPE_BULLET;
     
     bullet->damage = 1;
     bullet->maxLifeTime = 200;
@@ -18,9 +19,6 @@ Bullet* Bullet_Create() {
 
 void Bullet_Update(void* bullet) {
     Bullet* this = (Bullet*)bullet;
-    
-    this->entity->posX += this->entity->vX;
-    this->entity->posY += this->entity->vY;
     
     this->lifeTime++;
     if (this->lifeTime > this->maxLifeTime) {

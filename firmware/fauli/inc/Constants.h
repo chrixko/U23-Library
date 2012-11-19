@@ -9,6 +9,10 @@
 
 #define HEALTHBAR_HEIGHT 12
 #define HEALTHBAR_WIDTH 35
+
+#define COLLISION_TYPE_NONE 0
+#define COLLISION_TYPE_PLAYER 1
+#define COLLISION_TYPE_BULLET 2
 Camera* camera;
 
 #endif
