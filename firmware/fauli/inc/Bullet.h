@@ -2,8 +2,8 @@
 #define _BULLET_H_
 
 #include "Entity.h"
-#include "bilder.h"
 #include "Constants.h"
+#include "Sprite_LaserCat.h"
 
 typedef struct {
     int damage;

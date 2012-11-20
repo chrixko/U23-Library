@@ -1,11 +1,11 @@
 #include <Scene.h>
-#include <bilder.h>
 #include <Constants.h>
+#include "Background_Lab.h"
 
 Scene* Scene_Create()
 {
 	Scene* scene = (Scene*)malloc(sizeof(Scene));
-	scene->background = &bg_lab;
+	scene->background = &Background_Lab;
 	scene->update = NULL;
 	scene->draw = NULL;
 	scene->destroy = NULL;
