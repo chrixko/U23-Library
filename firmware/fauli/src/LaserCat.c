@@ -4,8 +4,6 @@ LaserCat* LaserCat_Create(Entity* target) {
     LaserCat* this = malloc(sizeof(LaserCat));
     this->entity = Entity_Create(this);
     
-    this->target = target;
-    	
 	this->entity->width = 46;
 	this->entity->height = 34;	
 	
@@ -20,6 +18,12 @@ LaserCat* LaserCat_Create(Entity* target) {
     this->animations[LASERCAT_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
     this->animations[LASERCAT_ANIMATION_IDLE]    = Animation_Create("idle", 0, 0, 10);
     this->currentAnimationIndex = LASERCAT_ANIMATION_IDLE;
+    
+    this->target = target;
+    
+    this->weapon = Weapon_Create(this->entity);
+    this->weapon->bulletSpeedX = -1;
+    this->weapon->cooldownTime = 200;
     
     return this;
 }
@@ -39,6 +43,7 @@ void LaserCat_Update(void* laserCat) {
         } else {
             this->entity->vY = 0;
         }
+        LaserCat_Shoot(this);
     } else {
         // search new target
         Vector* entities = Game_GetEntities();
@@ -56,6 +61,10 @@ void LaserCat_Update(void* laserCat) {
 	} else {
 	    this->currentAnimationIndex = LASERCAT_ANIMATION_WALKING;
 	}
+	
+	if (this->weapon) {
+    	Entity_Update(this->weapon->entity);
+	}
 }
 
 void LaserCat_Draw(void* laserCat, Bitmap* surface) {
@@ -67,8 +76,10 @@ void LaserCat_Destroy(void* laserCat) {
     
 }
 
-void LaserCat_Shoot(LaserCat* laserCat) {
-
+void LaserCat_Shoot(LaserCat* this) {
+    if (this->weapon) {
+        Weapon_Shoot(this->weapon);
+    }
 }
 
 bool LaserCat_Collision(void* laserCat, Entity* otherEntity) {
