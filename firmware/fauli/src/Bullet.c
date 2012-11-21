@@ -36,7 +36,7 @@ void Bullet_Destroy(void* bullet) {
     Bullet* this = (Bullet*)bullet;
 }
 
-bool Bullet_Collision(void* bullet, void* otherEntity) {
+bool Bullet_Collision(void* bullet, Entity* otherEntity) {
     Bullet* this = bullet;
     Entity* other;
     

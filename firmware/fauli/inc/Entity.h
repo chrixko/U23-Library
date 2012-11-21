@@ -6,7 +6,8 @@
 #include <game/Game.h>
 //#include "Constants.h"
 
-typedef struct 
+typedef struct Entity Entity;
+struct Entity
 {
 	int posX;
 	int posY;
@@ -30,7 +31,7 @@ typedef struct
 	void (*draw)(void*, Bitmap*);
 	void (*destroy)(void*);
 	/// @return true if the position should be reset to solve the collision
-	bool (*collision)(void* thisEntity, void* otherEntity); 
+	bool (*collision)(void* context, Entity* otherEntity); 
 	bool destroyed;
 	
 	int collisionType;
@@ -38,7 +39,7 @@ typedef struct
     bool sceneCollision;
 	Bitmap* bitmap;
 	
-} Entity;
+};
 
 Entity* Entity_Create(void* context);
 

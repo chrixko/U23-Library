@@ -22,7 +22,7 @@ void Player_Update(void* player);
 void Player_Draw(void* player, Bitmap* surface);
 void Player_Destroy(void* player);
 void Player_Shoot(Player* player);
-bool Player_Collision(void* thisEntity, void* otherEntity);
+bool Player_Collision(void* player, Entity* other);
 
 
 Animation* _Player_getCurrentAnimation(Player* player);

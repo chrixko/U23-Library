@@ -116,10 +116,9 @@ void Player_Shoot(Player* player) {
     }
 }
 
-bool Player_Collision(void* context, void* otherEntity) {
+bool Player_Collision(void* context, Entity* other) {
     Player* this = context;
-    Entity* other = otherEntity;
-
+    
     switch (other->collisionType) {
         case COLLISION_TYPE_BULLET_ENEMY: {
             this->entity->health -= ((Bullet*)other->context)->damage;        

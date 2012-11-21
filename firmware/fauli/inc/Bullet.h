@@ -17,6 +17,6 @@ Bullet* Bullet_Create();
 void Bullet_Update(void* bullet);
 void Bullet_Draw(void* bullet, Bitmap* surface);
 void Bullet_Destroy(void* bullet);
-bool Bullet_Collision(void* bullet, void* otherEntity);
+bool Bullet_Collision(void* bullet, Entity* otherEntity);
 
 #endif
