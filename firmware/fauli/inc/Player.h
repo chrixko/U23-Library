@@ -5,6 +5,9 @@
 #include <Animation.h>
 #include "Weapon.h"
 
+#define PLAYER_ANIMATION_WALKING 0
+#define PLAYER_ANIMATION_IDLE    1
+
 typedef struct
 {
 	Entity* entity;

@@ -29,8 +29,8 @@ Player* Player_Create()
 	
 	player->currentAnimationIndex = 0;
 	
-    player->animations[0] = Animation_Create("walk_left", 0, 5, 10);
-    player->animations[1] = Animation_Create("idle", 6, 11, 10);
+    player->animations[PLAYER_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
+    player->animations[PLAYER_ANIMATION_IDLE]    = Animation_Create("idle", 6, 11, 10);
 	
 	player->health = 100;
 	
@@ -100,13 +100,13 @@ void Player_Update(void* player)
 	    Entity_Update(p->weapon->entity);
 	}
 	
-	if((p->entity->vX != 0) || (p->entity->vY != 0))
+	if(p->entity->vX == 0 && p->entity->vY == 0)
 	{
-		p->currentAnimationIndex = 0;
+		p->currentAnimationIndex = PLAYER_ANIMATION_IDLE;
 	}
 	else
 	{
-		p->currentAnimationIndex = 1;
+		p->currentAnimationIndex = PLAYER_ANIMATION_WALKING;
 	}
 }
 
