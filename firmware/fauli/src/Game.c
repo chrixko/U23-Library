@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <Constants.h>
-#include <bilder.h>
 #include <Entity.h>
 #include <Player.h>
 #include <Vector.h>
 #include <Storyboard.h>
+#include "Background_Lab.h"
 #include "Ui.h"
 #include "Healthpack.h"
 
@@ -79,7 +79,7 @@ void Update(uint32_t tick)
 
 void Draw(Bitmap* surface)
 {
-	DrawRLEBitmap(surface, &bg_lab, camera->posX * -1, 0);
+	DrawRLEBitmap(surface, &Background_Lab, camera->posX * -1, 0);
 	
 	for (unsigned int i=0; i < entities.usedElements; ++i) {
 	    Entity* it = Vector_Get(&entities, i);
