@@ -11,6 +11,7 @@
 #include <Vector.h>
 #include <Storyboard.h>
 #include "Ui.h"
+#include "Healthpack.h"
 
 void Init(struct Gamestate*);
 void Update(uint32_t);
@@ -44,7 +45,7 @@ Vector* Game_GetEntities() {
     return &entities;
 }
 
-void Init(struct Gamestate* state) 
+void Init(struct Gamestate* state)
 {
 	camera = Camera_Create(0,0);
 	player = Player_Create();
@@ -52,6 +53,11 @@ void Init(struct Gamestate* state)
 	Game_AddEntity(player->entity);
 	storyboard = Storyboard_Create();
 	Game_AddEntity(storyboard->entity);
+
+	Healthpack* h = Healthpack_Create(COLLISION_TYPE_HEALTHPACK_ROBOT);
+	h->entity->posX = 20;
+	h->entity->posY = 100;
+	Game_AddEntity(h->entity);
 }
 
 void Update(uint32_t tick) 

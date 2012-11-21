@@ -7,6 +7,7 @@
 #include <Animation.h>
 #include <bilder.h>
 #include "Bullet.h"
+#include "Healthpack.h"
 
 Player* Player_Create()
 {
@@ -28,8 +29,8 @@ Player* Player_Create()
 	
 	player->currentAnimationIndex = 0;
 	
-	player->animations[0] = Animation_Create("walk_left", 0, 5, 10);
-	player->animations[1] = Animation_Create("idle", 6, 11, 10);
+    player->animations[0] = Animation_Create("walk_left", 0, 5, 10);
+    player->animations[1] = Animation_Create("idle", 6, 11, 10);
 	
 	player->health = 100;
 	
@@ -118,10 +119,19 @@ void Player_Shoot(Player* player) {
 bool Player_Collision(void* context, void* otherEntity) {
     Player* this = context;
     Entity* other = otherEntity;
-    
-    if (other->collisionType == COLLISION_TYPE_BULLET_ENEMY) {
-        this->entity->health -= ((Bullet*)other->context)->damage;
+
+    switch (other->collisionType) {
+        case COLLISION_TYPE_BULLET_ENEMY: {
+            this->entity->health -= ((Bullet*)other->context)->damage;        
+            break;
+        }
+        case COLLISION_TYPE_HEALTHPACK_ROBOT: {
+            Entity_ModifyHealth(this->entity, ((Healthpack*)other->context)->healthBonus);
+            other->destroyed = true;
+            break;
+        }
     }
+    
     return false;
 }
 
@@ -136,7 +146,7 @@ void Player_Draw(void* player, Bitmap* surface)
 	Animation* anim = _Player_getCurrentAnimation(p);
 	Animation_Play(anim);
 	
-	DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);	
+	DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
 }
 
 void Player_Destroy(void* player)

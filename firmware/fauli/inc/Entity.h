@@ -49,6 +49,7 @@ void Entity_Destroy(Entity* entity);
 
 void Entity_MoveBy(Entity* this, int x, int y);
 bool Entity_CheckCollision(Entity* a, Entity* b);
+void Entity_ModifyHealth(Entity* this, int value);
 
 // private
 

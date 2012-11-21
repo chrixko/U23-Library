@@ -84,7 +84,7 @@ void Entity_MoveBy(Entity* this, int x, int y)
 	Vector* entities = Game_GetEntities();
 	for (unsigned int i=0; i < entities->usedElements; ++i) {
 	    Entity* it = Vector_Get(entities, i);
-	    if (it != NULL) {
+	    if (it != NULL && it != this) {
 	        if (Entity_CheckCollision(this, it)) {
 	            if (Entity_Collision(this, it)) {
 	                this->posX = oldX;
@@ -109,6 +109,17 @@ void Entity_MoveBy(Entity* this, int x, int y)
     }
 }
 
+void Entity_ModifyHealth(Entity* this, int value) {
+    this->health += value;
+    if (this->health <= 0) {
+        //TODO start death animation
+        // block animationchanges
+        // destroy after animation
+        this->health = 0;
+    } else if (this->health > this->maxHealth) {
+        this->health = this->maxHealth;
+    }
+}
 
 
 /*
@@ -121,12 +132,11 @@ bool Entity_CheckCollision(Entity* a, Entity* b) {
     return Entity_checkRectCollision(a,b);
 }
 
-//TODO fix this. it doesn't work
 bool Entity_checkRectCollision(Entity* a, Entity* b) {
-    return !(a->posX < b->posX + b->width) &&
-           !(a->posX + a->width < b->posX) &&
-           !(a->posY < b->posY + b->height) &&
-           !(a->posY + a->height < b->posY);
+    return !(a->posX > b->posX+b->width ||
+             a->posX+a->width < b->posX ||
+             a->posY > b->posY+b->height ||
+             a->posY+a->height < b->posY);
 }
 
 bool Entity_checkRectCollisionByBitmap(Entity* a, Entity* b) {
