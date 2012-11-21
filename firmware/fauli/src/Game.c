@@ -55,7 +55,7 @@ void Init(struct Gamestate* state)
                                        "ed diam nonumy,\n"
                                        "\n"
                                        "press the A Button to continue...\n");
-    ui->storyboard->next = Storyboard_Create("this is a second storboard\n"
+    ui->storyboard->next = Storyboard_Create("this is a second storyboard\n\n"
                                             "press the A Button to continue...\n");
 	
 	Healthpack* h = Healthpack_Create(COLLISION_TYPE_HEALTHPACK_ROBOT);
