@@ -55,8 +55,8 @@ void Init(struct Gamestate* state)
 	Game_AddEntity(storyboard->entity);
 
 	Healthpack* h = Healthpack_Create(COLLISION_TYPE_HEALTHPACK_ROBOT);
-	h->entity->posX = 20;
-	h->entity->posY = 100;
+	h->entity->posX = 100;
+	h->entity->posY = 80;
 	Game_AddEntity(h->entity);
 }
 
