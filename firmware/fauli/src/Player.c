@@ -27,10 +27,10 @@ Player* Player_Create()
 	player->entity->collisionType = COLLISION_TYPE_PLAYER;
 	player->entity->sceneCollision = true;
 	
-	player->currentAnimationIndex = 0;
-	
     player->animations[PLAYER_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
     player->animations[PLAYER_ANIMATION_IDLE]    = Animation_Create("idle", 6, 11, 10);
+
+	player->currentAnimationIndex = PLAYER_ANIMATION_IDLE;
 	
 	player->health = 100;
 	

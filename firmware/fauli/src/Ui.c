@@ -3,6 +3,7 @@
 
 Ui* Ui_Create(Entity* player1, Entity* player2) {
     Ui* ui = malloc(sizeof(Ui));
+    ui->storyboard = NULL;
     
     if (player1) {
         ui->player1Healthbar = Healthbar_Create(player1);
@@ -30,6 +31,10 @@ void Ui_Draw(Ui* this, Bitmap* surface) {
     if (this->player2Healthbar) {
         Entity_Draw(this->player2Healthbar->entity, surface);
     }
+    
+    if (this->storyboard) {
+        Entity_Draw(this->storyboard->entity, surface);
+    }
 }
 
 void Ui_Update(Ui* this) {
@@ -39,5 +44,19 @@ void Ui_Update(Ui* this) {
     
     if (this->player2Healthbar) {
         Entity_Update(this->player2Healthbar->entity);
+    }
+    
+    if (this->storyboard) {
+        if (this->storyboard->entity->destroyed) {
+            Storyboard* lastStoryboard = this->storyboard;
+            if (lastStoryboard->next) {
+                this->storyboard = lastStoryboard->next;
+            } else {
+                this->storyboard = NULL;
+            }
+            Entity_Destroy(lastStoryboard->entity);  
+        } else {
+            Entity_Update(this->storyboard->entity);
+        }
     }
 }

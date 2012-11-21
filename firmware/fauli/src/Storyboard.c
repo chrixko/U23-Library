@@ -25,18 +25,33 @@ Storyboard* Storyboard_Create(char* text)
 	storyboard->entity->draw = Storyboard_Draw;
 	storyboard->entity->destroy = Storyboard_Destroy;
 	storyboard->text = text;
+	storyboard->next = NULL;
+	storyboard->buttonDown = false;
 	
 	return storyboard;	
-
 }
 
 
 
 
 
-void Storyboard_Update(void* player)
+void Storyboard_Update(void* storyboard)
 {	
-	
+	Storyboard* this = storyboard;
+
+    snes_button_state_t controller1 = GetControllerState1();
+    snes_button_state_t controller2 = GetControllerState2();
+    
+    if (this->buttonDown) {
+        if (!controller1.buttons.A && !controller2.buttons.A) {
+            this->entity->destroyed = true;
+            this->buttonDown = false;
+        }
+    } else {
+        if (controller1.buttons.A || controller2.buttons.A) {
+            this->buttonDown = true;
+        }
+    }
 }
 
 

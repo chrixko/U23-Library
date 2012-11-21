@@ -4,12 +4,14 @@
 #include <Entity.h>
 #include <Animation.h>
 
-typedef struct
+typedef struct Storyboard Storyboard;
+struct Storyboard
 {
 	Entity* entity;
 	char* text;
-	
-} Storyboard;
+	Storyboard* next;
+	bool buttonDown;
+};
 
 Storyboard* Storyboard_Create(char* text);
 void Storyboard_Draw(void* storyboard, Bitmap* surface);

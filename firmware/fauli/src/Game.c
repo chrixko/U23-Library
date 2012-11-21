@@ -8,7 +8,6 @@
 #include <Entity.h>
 #include <Player.h>
 #include <Vector.h>
-#include <Storyboard.h>
 #include "Background_Lab.h"
 #include "Ui.h"
 #include "Healthpack.h"
@@ -20,7 +19,6 @@ void Draw(Bitmap *);
 Gamestate InitState = { Init, NULL, NULL, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
-Storyboard* storyboard;
 Player* player;
 Ui* ui;
 Vector entities;
@@ -51,11 +49,15 @@ void Init(struct Gamestate* state)
 	player = Player_Create();
 	ui = Ui_Create(player->entity, NULL);
 	Game_AddEntity(player->entity);
-	storyboard = Storyboard_Create("Lorem ipsum dolor\nsit amet, consetetur\nsadipscing elitr,\ned diam nonumy,\n");
-	storyboard->entity->posY = 100;
+	ui->storyboard = Storyboard_Create("Lorem ipsum dolor\n"
+                                       "sit amet, consetetur\n"
+                                       "sadipscing elitr,\n"
+                                       "ed diam nonumy,\n"
+                                       "\n"
+                                       "press the A Button to continue...\n");
+    ui->storyboard->next = Storyboard_Create("this is a second storboard\n"
+                                            "press the A Button to continue...\n");
 	
-	Game_AddEntity(storyboard->entity);
-
 	Healthpack* h = Healthpack_Create(COLLISION_TYPE_HEALTHPACK_ROBOT);
 	h->entity->posX = 100;
 	h->entity->posY = 80;
@@ -64,18 +66,20 @@ void Init(struct Gamestate* state)
 
 void Update(uint32_t tick) 
 {
-	for (unsigned int i=0; i < entities.usedElements; ++i) {
-	    Entity* it = Vector_Get(&entities, i);
-	    if (it != NULL) {
-	        if (it->destroyed) {
-    	        Entity_Destroy(it);
-	            Vector_Set(&entities, i, NULL);
-	        } else {
-    	        Entity_Update(it);
+    if (!ui->storyboard) {
+	    for (unsigned int i=0; i < entities.usedElements; ++i) {
+	        Entity* it = Vector_Get(&entities, i);
+	        if (it != NULL) {
+	            if (it->destroyed) {
+        	        Entity_Destroy(it);
+	                Vector_Set(&entities, i, NULL);
+	            } else {
+        	        Entity_Update(it);
+	            }
 	        }
 	    }
-	}
-	Camera_FocusOnEntity(camera, player->entity);
+	    Camera_FocusOnEntity(camera, player->entity);
+    }
 	Ui_Update(ui);
 }
 
