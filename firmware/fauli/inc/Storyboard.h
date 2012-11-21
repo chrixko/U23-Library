@@ -11,7 +11,7 @@ typedef struct
 	
 } Storyboard;
 
-Storyboard* Storyboard_Create();
+Storyboard* Storyboard_Create(char* text);
 void Storyboard_Draw(void* storyboard, Bitmap* surface);
 void Storyboard_Update(void* storyboard);
 void Storyboard_Destroy(void* storyboard);

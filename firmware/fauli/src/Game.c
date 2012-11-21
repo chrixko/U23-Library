@@ -51,7 +51,9 @@ void Init(struct Gamestate* state)
 	player = Player_Create();
 	ui = Ui_Create(player->entity, NULL);
 	Game_AddEntity(player->entity);
-	storyboard = Storyboard_Create();
+	storyboard = Storyboard_Create("Lorem ipsum dolor\nsit amet, consetetur\nsadipscing elitr,\ned diam nonumy,\n");
+	storyboard->entity->posY = 100;
+	
 	Game_AddEntity(storyboard->entity);
 
 	Healthpack* h = Healthpack_Create(COLLISION_TYPE_HEALTHPACK_ROBOT);
