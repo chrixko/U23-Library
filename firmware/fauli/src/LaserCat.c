@@ -1,0 +1,81 @@
+#include "LaserCat.h"
+
+LaserCat* LaserCat_Create(Entity* target) {
+    LaserCat* this = malloc(sizeof(LaserCat));
+    this->entity = Entity_Create(this);
+    
+    this->target = target;
+    	
+	this->entity->width = 46;
+	this->entity->height = 34;	
+	
+	this->entity->update = LaserCat_Update;
+	this->entity->draw = LaserCat_Draw;
+	this->entity->destroy = LaserCat_Destroy;
+	this->entity->collision = LaserCat_Collision;
+	
+    this->entity->collisionType = COLLISION_TYPE_ENEMY;
+	this->entity->sceneCollision = true;
+	
+    this->animations[LASERCAT_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
+    this->animations[LASERCAT_ANIMATION_IDLE]    = Animation_Create("idle", 0, 0, 10);
+    this->currentAnimationIndex = LASERCAT_ANIMATION_IDLE;
+    
+    return this;
+}
+
+void LaserCat_Update(void* laserCat) {
+    LaserCat* this = laserCat;
+    
+    if (this->target) {
+        if (this->target->destroyed) {
+            this->target = NULL;
+        }
+        
+        if (this->target->posY+(this->target->height/2) < this->entity->posY) {
+            this->entity->vY = -1;
+        } else if (this->target->posY+(this->target->height/2) > this->entity->posY) {
+            this->entity->vY = 1;
+        } else {
+            this->entity->vY = 0;
+        }
+    } else {
+        // search new target
+        Vector* entities = Game_GetEntities();
+        for (unsigned int i=0; i < entities->usedElements; ++i) {
+	        Entity* it = Vector_Get(entities, i);
+	        if (it != NULL && it != this->entity && it->collisionType == COLLISION_TYPE_PLAYER) {
+	            this->target = it;
+	            break;
+	        }
+        }
+	}
+	
+	if (this->entity->vY == 0 && this->entity->vX == 0) {
+        this->currentAnimationIndex = LASERCAT_ANIMATION_IDLE;
+	} else {
+	    this->currentAnimationIndex = LASERCAT_ANIMATION_WALKING;
+	}
+}
+
+void LaserCat_Draw(void* laserCat, Bitmap* surface) {
+    LaserCat* this = laserCat;
+    DrawRLEBitmap(surface, Sprite_LaserCat[this->currentAnimationIndex], this->entity->posX - camera->posX, this->entity->posY);
+}
+
+void LaserCat_Destroy(void* laserCat) {
+    
+}
+
+void LaserCat_Shoot(LaserCat* laserCat) {
+
+}
+
+bool LaserCat_Collision(void* laserCat, Entity* otherEntity) {
+    LaserCat* this = laserCat;
+    if (otherEntity->collisionType == COLLISION_TYPE_BULLET_PLAYER) {
+        this->entity->destroyed = true;
+        return true;
+    }
+    return false;
+}

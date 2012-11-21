@@ -102,7 +102,7 @@ void Entity_MoveBy(Entity* this, int x, int y)
 		    this->posX = oldX;
 	    }
 	
-	    if((this->posY < ((SCREEN_HEIGHT - FLOOR_HEIGHT) - 71)) || (this->posY > 200-71))
+	    if((this->posY < ((SCREEN_HEIGHT - FLOOR_HEIGHT) - this->height)) || (this->posY > SCREEN_HEIGHT-this->height))
 	    {
 		    this->posY = oldY;
 	    }

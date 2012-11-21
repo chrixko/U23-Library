@@ -13,7 +13,7 @@ typedef struct {
 } Bullet;
 
 
-Bullet* Bullet_Create();
+Bullet* Bullet_Create(int collisionType);
 void Bullet_Update(void* bullet);
 void Bullet_Draw(void* bullet, Bitmap* surface);
 void Bullet_Destroy(void* bullet);

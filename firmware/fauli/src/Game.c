@@ -11,6 +11,7 @@
 #include "Background_Lab.h"
 #include "Ui.h"
 #include "Healthpack.h"
+#include "LaserCat.h"
 
 void Init(struct Gamestate*);
 void Update(uint32_t);
@@ -19,9 +20,9 @@ void Draw(Bitmap *);
 Gamestate InitState = { Init, NULL, NULL, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
-Player* player;
 Ui* ui;
 Vector entities;
+Player* player1;
 
 void Game_AddEntity(Entity* entity) {
     bool inserted = false;
@@ -46,9 +47,9 @@ Vector* Game_GetEntities() {
 void Init(struct Gamestate* state)
 {
 	camera = Camera_Create(0,0);
-	player = Player_Create();
-	ui = Ui_Create(player->entity, NULL);
-	Game_AddEntity(player->entity);
+	player1 = Player_Create();
+	ui = Ui_Create(player1->entity, NULL);
+	Game_AddEntity(player1->entity);
 	ui->storyboard = Storyboard_Create("Lorem ipsum dolor\n"
                                        "sit amet, consetetur\n"
                                        "sadipscing elitr,\n"
@@ -62,6 +63,11 @@ void Init(struct Gamestate* state)
 	h->entity->posX = 100;
 	h->entity->posY = 80;
 	Game_AddEntity(h->entity);
+
+	LaserCat* lc = LaserCat_Create();
+	lc->entity->posX = 200;
+	lc->entity->posY = 120;
+	Game_AddEntity(lc->entity);
 }
 
 void Update(uint32_t tick) 
@@ -78,7 +84,7 @@ void Update(uint32_t tick)
 	            }
 	        }
 	    }
-	    Camera_FocusOnEntity(camera, player->entity);
+	    Camera_FocusOnEntity(camera, player1->entity);
     }
 	Ui_Update(ui);
 }

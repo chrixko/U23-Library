@@ -24,8 +24,15 @@ void Weapon_Shoot(Weapon* this) {
     if (this->cooldownTimer >= this->cooldownTime) {
         this->cooldownTimer = 0;
         
+        int bulletCollisionType;
+        if (this->wielder && this->wielder->collisionType == COLLISION_TYPE_PLAYER) {
+            bulletCollisionType = COLLISION_TYPE_BULLET_PLAYER;
+        } else {
+            bulletCollisionType = COLLISION_TYPE_BULLET_ENEMY;        
+        }
+        
         for (unsigned int i=0; i < this->bulletsPerShot; ++i) {
-            Bullet* bullet = Bullet_Create();
+            Bullet* bullet = Bullet_Create(bulletCollisionType);
             bullet->entity->posX = this->entity->posX;
             bullet->entity->posY = this->entity->posY;
 

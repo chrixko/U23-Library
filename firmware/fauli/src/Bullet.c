@@ -1,14 +1,17 @@
 
 #include "Bullet.h"
 
-Bullet* Bullet_Create() {
+Bullet* Bullet_Create(int collisionType) {
     Bullet* bullet = malloc(sizeof(Bullet));
     bullet->entity = Entity_Create(bullet);
     bullet->entity->update = Bullet_Update;
     bullet->entity->destroy = Bullet_Destroy;
     bullet->entity->draw = Bullet_Draw;
     bullet->entity->collision = Bullet_Collision;
-    bullet->entity->collisionType = COLLISION_TYPE_BULLET_PLAYER;
+    bullet->entity->collisionType = collisionType;
+    
+    bullet->entity->width = 46;
+    bullet->entity->height = 34;
     
     bullet->damage = 1;
     bullet->maxLifeTime = 200;
