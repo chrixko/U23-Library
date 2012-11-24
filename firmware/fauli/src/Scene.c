@@ -2,10 +2,14 @@
 #include <Constants.h>
 #include "Background_Lab.h"
 
-Scene* Scene_Create()
+Scene* Scene_Create(void* context)
 {
 	Scene* scene = (Scene*)malloc(sizeof(Scene));
 	scene->background = &Background_Lab;
+	scene->updateEntities = true;
+	
+	scene->context = context;
+	scene->init = NULL;
 	scene->update = NULL;
 	scene->draw = NULL;
 	scene->destroy = NULL;
@@ -15,51 +19,62 @@ Scene* Scene_Create()
 	return scene;
 }
 
-void Scene_Update(void* scene)
+void Scene_Init(Scene* scene)
 {	
-	Scene* s = scene;
-	
-	if(s->update != NULL)
+	if(scene->init != NULL)
 	{
-		s->update(s);
-	}
-	
-	for (unsigned int i=0; i < s->entities.usedElements; ++i) {
-	    Entity* it = Vector_Get(&s->entities, i);
-	    if (it != NULL) {
-	        if (it->destroyed) {
-    	        Entity_Destroy(it);
-	            Vector_Set(&s->entities, i, NULL);
-	        } else {
-    	        Entity_Update(it);
-	        }
-	    }
+		scene->init(scene->context);
 	}	
 }
 
-void Scene_Draw(void* scene, Bitmap* surface)
-{
-	Scene* s = scene;
-	
-	if(s->draw != NULL)
+void Scene_Update(Scene* scene)
+{			
+	if(scene->update != NULL)
 	{
-		s->draw(scene, surface);
+		scene->update(scene->context);
 	}
 	
-	DrawRLEBitmap(surface, s->background, camera->posX * -1, 0);
+	if(scene->updateEntities)
+	{
+		for (unsigned int i=0; i < scene->entities.usedElements; ++i) {
+			Entity* it = Vector_Get(&scene->entities, i);
+			if (it != NULL) {
+				if (it->destroyed) {
+					Entity_Destroy(it);
+					Vector_Set(&scene->entities, i, NULL);
+				} else {
+					Entity_Update(it);
+				}
+			}
+		}		
+	}	
+}
+
+void Scene_Draw(Scene* scene, Bitmap* surface)
+{	
+	DrawRLEBitmap(surface, scene->background, camera->posX * -1, 0);
 	
-	for (unsigned int i=0; i < s->entities.usedElements; ++i) {
-	    Entity* it = Vector_Get(&s->entities, i);
+	for (unsigned int i=0; i < scene->entities.usedElements; ++i) {
+	    Entity* it = Vector_Get(&scene->entities, i);
 	    if (it != NULL) {
     	    Entity_Draw(it, surface);
 	    }
-	}	
+	}
+	
+	if(scene->draw != NULL)
+	{
+		scene->draw(scene->context, surface);
+	}
 }
 
 void Scene_Destroy(void* this)
 {
 	Scene* scene = this;
 	free(scene);
+}
+
+Vector* Scene_GetEntities(Scene* this) {
+    return &this->entities;
 }
 
 void Scene_AddEntity(Scene* scene, Entity* entity) {	

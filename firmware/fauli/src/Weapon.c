@@ -54,7 +54,7 @@ void Weapon_Shoot(Weapon* this) {
                 }
             }
             
-           Game_AddEntity(bullet->entity);
+           Scene_AddEntity(currentScene, bullet->entity);
         }        
     }
 }

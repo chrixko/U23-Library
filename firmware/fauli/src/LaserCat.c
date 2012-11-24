@@ -43,10 +43,11 @@ void LaserCat_Update(void* laserCat) {
         } else {
             this->entity->vY = 0;
         }
+
         LaserCat_Shoot(this);
     } else {
         // search new target
-        Vector* entities = Game_GetEntities();
+        Vector* entities = Scene_GetEntities(currentScene);
         for (unsigned int i=0; i < entities->usedElements; ++i) {
 	        Entity* it = Vector_Get(entities, i);
 	        if (it != NULL && it != this->entity && it->collisionType == COLLISION_TYPE_PLAYER) {

@@ -81,7 +81,7 @@ void Entity_MoveBy(Entity* this, int x, int y)
 	this->posY = this->posY + y;
 	
 	// check collision
-	Vector* entities = Game_GetEntities();
+	Vector* entities = Scene_GetEntities(currentScene);
 	for (unsigned int i=0; i < entities->usedElements; ++i) {
 	    Entity* it = Vector_Get(entities, i);
 	    if (it != NULL && it != this) {

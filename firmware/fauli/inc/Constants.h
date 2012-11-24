@@ -2,6 +2,7 @@
 #define __CONSTANTS_H__
 
 #include <Camera.h>
+#include <Scene.h>
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 200
@@ -18,5 +19,6 @@
 #define COLLISION_TYPE_HEALTHPACK_HUMAN 5
 #define COLLISION_TYPE_HEALTHPACK_ROBOT 6
 Camera* camera;
+Scene* currentScene;
 
 #endif
