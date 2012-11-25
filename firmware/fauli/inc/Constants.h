@@ -3,6 +3,7 @@
 
 #include <Camera.h>
 #include <Scene.h>
+#include "Utils.h"
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 200
@@ -20,5 +21,6 @@
 #define COLLISION_TYPE_HEALTHPACK_ROBOT 6
 Camera* camera;
 Scene* currentScene;
+Scene* nextScene;
 
 #endif

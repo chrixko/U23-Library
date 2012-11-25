@@ -28,6 +28,8 @@ Storyboard* Storyboard_Create(char* text)
 	storyboard->next = NULL;
 	storyboard->buttonDown = false;
 	
+	storyboard->onClose = NULL;
+	
 	return storyboard;	
 }
 
@@ -73,7 +75,8 @@ void Storyboard_Draw(void* storyboard, Bitmap* surface)
 void Storyboard_Destroy(void* storyboard)
 {
     Storyboard* s = storyboard;
-	
-	
+    if (s->onClose) {
+        s->onClose();
+    }
 	free(s);
 }

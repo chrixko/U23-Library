@@ -11,6 +11,7 @@ struct Storyboard
 	char* text;
 	Storyboard* next;
 	bool buttonDown;
+	void (*onClose)();
 };
 
 Storyboard* Storyboard_Create(char* text);

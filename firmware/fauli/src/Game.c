@@ -24,6 +24,12 @@ void Init(struct Gamestate* state)
 
 void Update(uint32_t tick) 
 {
+    if (nextScene) {
+        Scene_Destroy(currentScene);
+        currentScene = nextScene;
+        nextScene = NULL;
+        Scene_Init(currentScene);
+    }
 	Scene_Update(currentScene);
 }
 
