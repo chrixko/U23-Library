@@ -13,5 +13,6 @@ typedef struct {
 Healthpack* Healthpack_Create(int type);
 
 void Healthpack_Draw(void* healthpack, Bitmap* surface);
+void Healthpack_Destroy(void* healthpack);
 
 #endif

@@ -13,6 +13,7 @@ struct TriggerArea {
 TriggerArea* TriggerArea_Create(void (*onPlayerEnter)(TriggerArea*, Player*), void (*onPlayerLeave)(TriggerArea*, Player*));
 void TriggerArea_Update(void* context);
 bool TriggerArea_Collision(void* context, Entity* other);
+void TrigerArea_Destroy(void* context);
 
 
 #endif

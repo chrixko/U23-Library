@@ -28,3 +28,8 @@ bool TriggerArea_Collision(void* context, Entity* other) {
     }
     return false;
 }
+
+void TrigerArea_Destroy(void* context) {
+    TriggerArea* this = context;
+    free(this);
+}

@@ -22,7 +22,9 @@ void LabScene_Init(void* labScene)
 {
 	LabScene* s = labScene;
 	
-	camera = Camera_Create(0,0);
+	camera->posX = 0;
+	camera->posY = 0;
+	
 	s->firstPlayer = Player_Create();
 	s->ui = Ui_Create(s->firstPlayer->entity, NULL);
 	Scene_AddEntity(s->scene, s->firstPlayer->entity);

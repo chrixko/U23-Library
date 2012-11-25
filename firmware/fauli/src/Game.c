@@ -17,6 +17,7 @@ Game* TheGame = &(Game) {&InitState};
 
 void Init(struct Gamestate* state)
 {	
+    camera = Camera_Create(0,0);
 	LabScene* s = LabScene_Create();
 	currentScene = s->scene;
 	Scene_Init(currentScene);

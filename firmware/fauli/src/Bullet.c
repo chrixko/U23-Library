@@ -37,6 +37,7 @@ void Bullet_Draw(void* bullet, Bitmap* surface) {
 
 void Bullet_Destroy(void* bullet) {
     Bullet* this = (Bullet*)bullet;
+    free(this);
 }
 
 bool Bullet_Collision(void* bullet, Entity* otherEntity) {

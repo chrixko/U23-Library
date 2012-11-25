@@ -5,6 +5,7 @@ Healthbar* Healthbar_Create(Entity* watchedEntity) {
     healthbar->entity = Entity_Create(healthbar);
     healthbar->entity->update = Healthbar_Update;
     healthbar->entity->draw = Healthbar_Draw;
+    healthbar->entity->destroy = Healthbar_Destroy;
     healthbar->entity->width = HEALTHBAR_WIDTH;
     healthbar->entity->height = HEALTHBAR_HEIGHT;
     
@@ -57,4 +58,9 @@ void Healthbar_Update(void* healthbar) {
     } else {
         this->color = RGB(0, 175, 0); // dark green 75% - 100%
     }
+}
+
+void Healthbar_Destroy(void* healthbar) {
+    Healthbar* this = healthbar;
+    free(this);
 }

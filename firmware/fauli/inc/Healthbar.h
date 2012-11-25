@@ -15,5 +15,7 @@ typedef struct {
 Healthbar* Healthbar_Create(Entity* watchedEntity);
 void Healthbar_Draw(void* healthbar, Bitmap* surface);
 void Healthbar_Update(void* healthbar);
+void Healthbar_Destroy(void* healthbar);
+
 
 #endif

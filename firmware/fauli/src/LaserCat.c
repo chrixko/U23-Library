@@ -74,7 +74,13 @@ void LaserCat_Draw(void* laserCat, Bitmap* surface) {
 }
 
 void LaserCat_Destroy(void* laserCat) {
-    
+    LaserCat* this = laserCat;
+    Animation_Destroy(this->animations[0]);
+    Animation_Destroy(this->animations[1]);
+    if (this->weapon) {
+        Entity_Destroy(this->weapon->entity);
+    }
+    free(this);
 }
 
 void LaserCat_Shoot(LaserCat* this) {

@@ -76,6 +76,7 @@ void Weapon_Update(void* weapon) {
 
 void Weapon_Destroy(void* weapon) {
     Weapon* this = weapon;
+    free(weapon);
 }
 
 void Weapon_Rotate(Weapon* this, float delta) {
