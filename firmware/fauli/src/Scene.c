@@ -69,12 +69,17 @@ void Scene_Draw(Scene* scene, Bitmap* surface)
 
 void Scene_Destroy(Scene* this)
 {
+    if (this->destroy) {
+        this->destroy(this->context);
+    }
+
     for (unsigned int i=0; i < this->entities.usedElements; ++i) {
         Entity* it = Vector_Get(&this->entities, i);
 	    if (it != NULL) {
     	    Entity_Destroy(it);
 	    }
 	}
+	Vector_Destroy(&this->entities);
 	
 	free(this);
 }

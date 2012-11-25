@@ -91,6 +91,11 @@ void LabScene_Draw(void* scene, Bitmap* surface)
 	Ui_Draw(s->ui, surface);
 }
 
+void LabScene_Destroy(void* labScene) {
+	LabScene* s = labScene;
+	Ui_Destroy(s->ui);
+}
+
 void LabScene_OnSpawnLaserCatsTrigger(TriggerArea* trigger, Player* triggeringPlayer) {
     if (trigger->entity->destroyed) {
         return;

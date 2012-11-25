@@ -20,6 +20,7 @@ LabScene* LabScene_Create();
 void LabScene_Init(void* labScene);
 void LabScene_Update(void* labScene);
 void LabScene_Draw(void* labScene, Bitmap* surface);
+void LabScene_Destroy(void* labScene);
 
 void LabScene_OnSpawnLaserCatsTrigger(TriggerArea* trigger, Player* triggeringPlayer);
 void LabScene_OnFinishTrigger(TriggerArea* trigger, Player* triggeringPlayer);

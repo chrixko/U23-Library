@@ -36,6 +36,12 @@ void Vector_Set(Vector* this, unsigned int i, ElementType element) {
     }
 }
 
+void Vector_Destroy(Vector* this) {
+    if (this->elements) {
+        free(this->elements);
+    }
+}
+
 // private
 void _Vector_AddElementWithoutSizeCheck(Vector* this, ElementType element) {
     this->elements[this->usedElements] = element;

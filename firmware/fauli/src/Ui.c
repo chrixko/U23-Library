@@ -61,6 +61,21 @@ void Ui_Update(Ui* this) {
     }
 }
 
+void Ui_Destroy(Ui* this) {
+    if (this->player1Healthbar) {
+        Entity_Destroy(this->player1Healthbar->entity);
+    }
+    
+    if (this->player2Healthbar) {
+        Entity_Destroy(this->player2Healthbar->entity);
+    }
+    
+    if (this->storyboard) {
+        Entity_Destroy(this->storyboard->entity);
+    }
+    free (this);
+}
+
 void Ui_SetStoryboard(Ui* this, Storyboard* storyboard) {
     if (this->storyboard) {
         Entity_Destroy(this->storyboard->entity);
