@@ -15,7 +15,7 @@ LabScene* LabScene_Create()
 	
 	ls->firstPlayer = Player_Create();
 	
-	return ls; //ARE YOU FUCKING KIDDING ME?
+	return ls;
 }
 
 void LabScene_Init(void* labScene)
