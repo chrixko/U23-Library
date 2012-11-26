@@ -107,8 +107,8 @@ void LabScene_OnSpawnLaserCatsTrigger(TriggerArea* trigger, Player* triggeringPl
     int minX = trigger->entity->posX + (SCREEN_WIDTH*0.25);
     int maxX = trigger->entity->posX + (SCREEN_WIDTH*0.75);
  
-    int minY = FLOOR_HEIGHT;
-    int maxY = SCREEN_HEIGHT - 5;
+    int minY = FLOOR_HEIGHT + 1;
+    int maxY = SCREEN_HEIGHT - 1;
  
     unsigned int numberOfEnemies = randomInRange(1, 5);
     for (unsigned int i=0; i < numberOfEnemies; ++i) {
@@ -120,6 +120,11 @@ void LabScene_OnSpawnLaserCatsTrigger(TriggerArea* trigger, Player* triggeringPl
 }
 
 void LabScene_OnFinishTrigger(TriggerArea* trigger, Player* triggeringPlayer) {
+    if (trigger->entity->destroyed) {
+        return;
+    }
+    trigger->entity->destroyed = true;
+    
     Storyboard* sb = Storyboard_Create("You Win!\nWe ran out of cats!\n\nPress A to play again...");
     sb->onClose = LabScene_OnFinishStorboardClosed;
     Ui_SetStoryboard(((LabScene*)currentScene->context)->ui, sb);
