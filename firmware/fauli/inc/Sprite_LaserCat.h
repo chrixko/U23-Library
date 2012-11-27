@@ -3,6 +3,8 @@
 
 #include <RLEBitmap.h>
 
-extern const RLEBitmap * const Sprite_LaserCat[6];
-
+extern const RLEBitmap * const Sprite_LaserCat[9];
+//1-6 run
+//7-9 hit
+ 
 #endif
