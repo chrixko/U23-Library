@@ -36,6 +36,9 @@ Player* Player_Create()
 	
 	player->weapon = Weapon_Create(player->entity);
 	
+	player->weapon->offsetX = player->entity->width;
+	player->weapon->offsetY = (player->entity->height / 2) - 10;
+	
 	return player;	
 }
 

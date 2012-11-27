@@ -1,5 +1,6 @@
 
 #include "Bullet.h"
+#include <Projectile_Laser.h>
 
 Bullet* Bullet_Create(int collisionType) {
     Bullet* bullet = malloc(sizeof(Bullet));
@@ -10,8 +11,8 @@ Bullet* Bullet_Create(int collisionType) {
     bullet->entity->collision = Bullet_Collision;
     bullet->entity->collisionType = collisionType;
     
-    bullet->entity->width = 46;
-    bullet->entity->height = 34;
+    bullet->entity->width = 10;
+    bullet->entity->height = 7;
     
     bullet->damage = 1;
     bullet->maxLifeTime = 200;
@@ -32,7 +33,8 @@ void Bullet_Update(void* bullet) {
 
 void Bullet_Draw(void* bullet, Bitmap* surface) {
     Bullet* this = (Bullet*)bullet;
-    DrawRLEBitmap(surface, Sprite_LaserCat[0], this->entity->posX - camera->posX, this->entity->posY);
+    
+    DrawRLEBitmap(surface, &Projectile_Laser, this->entity->posX - camera->posX, this->entity->posY);
 }
 
 void Bullet_Destroy(void* bullet) {
