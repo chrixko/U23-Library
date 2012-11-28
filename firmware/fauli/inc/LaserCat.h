@@ -8,13 +8,15 @@
 
 #define LASERCAT_ANIMATION_WALKING 0
 #define LASERCAT_ANIMATION_IDLE 1
+#define LASERCAT_ANIMATION_DYING 2
 
 typedef struct {
-	Entity* entity;
-	Animation* animations[2];
+	Entity* entity;	
+	Animation* animations[3];
 	int currentAnimationIndex;	
 	Weapon* weapon;
 	Entity* target;
+	bool dead;
 } LaserCat;
 
 LaserCat* LaserCat_Create();
