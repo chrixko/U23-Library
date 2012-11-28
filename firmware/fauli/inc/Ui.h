@@ -3,6 +3,8 @@
 
 #include "Healthbar.h"
 #include "Storyboard.h"
+#include "HealthbarIcon_Robo.h"
+#include "HealthbarIcon_Prof.h"
 
 typedef struct {
     Healthbar* player1Healthbar;
