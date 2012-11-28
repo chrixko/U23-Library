@@ -22,14 +22,26 @@ LaserCat* LaserCat_Create(Entity* target) {
     
     this->currentAnimationIndex = LASERCAT_ANIMATION_IDLE;        
     this->target = target;
+    this->targetPosX = this->targetPosY = 0;
+    
+    _LaserCat_CalculateTargetPosition(this);
+    
+    this->entity->health = 30;
     
     this->weapon = Weapon_Create(this->entity);
-    this->weapon->bulletSpeedX = -1;
+    this->weapon->bulletSpeedX = -2;
     this->weapon->cooldownTime = 200;
     
     this->dead = false;
     
     return this;
+}
+
+void _LaserCat_CalculateTargetPosition(LaserCat* this) {
+	//NOT IN USE ATM
+	//this->targetPosX = this->entity->posX + (randomInRange(0, 10) - 20);	
+	this->targetPosX = this->entity->posX;
+	this->targetPosY = this->target->posY + ((this->target->height / 2) - 10);
 }
 
 void LaserCat_Update(void* laserCat) {
@@ -44,14 +56,14 @@ void LaserCat_Update(void* laserCat) {
             this->target = NULL;
         }
         
-        if (this->target->posY+(this->target->height/2) < this->entity->posY) {
+       if (this->target->posY+(this->target->height/2) < this->entity->posY) {
             this->entity->vY = -1;
         } else if (this->target->posY+(this->target->height/2) > this->entity->posY) {
             this->entity->vY = 1;
         } else {
             this->entity->vY = 0;
-        }
-
+        }	
+		
         LaserCat_Shoot(this);
     } else {
         // search new target
@@ -60,6 +72,7 @@ void LaserCat_Update(void* laserCat) {
 	        Entity* it = Vector_Get(entities, i);
 	        if (it != NULL && it != this->entity && it->collisionType == COLLISION_TYPE_PLAYER) {
 	            this->target = it;
+	            _LaserCat_CalculateTargetPosition(this);
 	            break;
 	        }
         }
@@ -108,6 +121,8 @@ void LaserCat_Shoot(LaserCat* this) {
 }
 
 void LaserCat_Die(LaserCat* this) {
+	this->entity->vX = 0; 
+	this->entity->vY = 0;
 	this->dead = true;
 	this->currentAnimationIndex = LASERCAT_ANIMATION_DYING;
 }
@@ -122,7 +137,7 @@ bool LaserCat_Collision(void* laserCat, Entity* otherEntity) {
 	        
         if(this->entity->health <= 0)
         {
-			LaserCat_Die(this); //Die animation
+			LaserCat_Die(this);
 		}
                 
         return true;

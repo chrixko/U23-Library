@@ -16,6 +16,7 @@ typedef struct {
 	int currentAnimationIndex;	
 	Weapon* weapon;
 	Entity* target;
+	int targetPosX, targetPosY;
 	bool dead;
 } LaserCat;
 
@@ -25,5 +26,7 @@ void LaserCat_Draw(void* laserCat, Bitmap* surface);
 void LaserCat_Destroy(void* laserCat);
 void LaserCat_Shoot(LaserCat* this);
 bool LaserCat_Collision(void* laserCat, Entity* other);
+
+void _LaserCat_CalculateTargetPosition(LaserCat* this);
 
 #endif
