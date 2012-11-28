@@ -1,7 +1,7 @@
 #include <RLEBitmap.h>
 
-const RLEBitmap * const Healthpack_Battery=
-(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(259,23,10)]; }){
+const struct { RLEBitmap rle; Pixel codes[RLECodeCount(259,23,10)];} Healthpack_Battery=
+{
 	{ 17,21 },
 	{
 		RLECode(0x02,0x02), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLECode(0x02,0x02), 

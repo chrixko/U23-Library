@@ -14,8 +14,7 @@ Healthpack* Healthpack_Create(int collisionType) {
 
 void Healthpack_Draw(void* healthpack, Bitmap* surface) {
     Healthpack* this = healthpack;
-    extern const RLEBitmap Healthpack_Battery;
-    DrawRLEBitmap(surface, &Healthpack_Battery, this->entity->posX - camera->posX, this->entity->posY);
+    DrawRLEBitmap(surface, &Healthpack_Cake, this->entity->posX - camera->posX, this->entity->posY);
 }
 void Healthpack_Destroy(void* healthpack) {
     Healthpack* this = healthpack;

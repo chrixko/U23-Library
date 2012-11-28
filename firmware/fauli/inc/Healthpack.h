@@ -3,7 +3,7 @@
 
 #include "Constants.h"
 #include "Entity.h"
-#include "Healthpack_Battery.h"
+#include "Healthpack_Cake.h"
 
 typedef struct {
     Entity* entity;
