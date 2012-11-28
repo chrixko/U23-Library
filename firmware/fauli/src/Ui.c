@@ -7,7 +7,7 @@ Ui* Ui_Create(Entity* player1, Entity* player2) {
     
     if (player1) {
         ui->player1Healthbar = Healthbar_Create(player1);
-        ui->player1Healthbar->entity->posX = 4;
+        ui->player1Healthbar->entity->posX = 30;
         ui->player1Healthbar->entity->posY = SCREEN_HEIGHT - HEALTHBAR_HEIGHT - 4;
     } else {
         ui->player1Healthbar = NULL;
@@ -15,7 +15,7 @@ Ui* Ui_Create(Entity* player1, Entity* player2) {
     
     if (player2) {
         ui->player2Healthbar = Healthbar_Create(player2);
-        ui->player2Healthbar->entity->posX = 4;
+        ui->player2Healthbar->entity->posX = 30;
         ui->player2Healthbar->entity->posY = SCREEN_HEIGHT - (HEALTHBAR_HEIGHT*2) - 8;
     } else {
         ui->player2Healthbar = NULL;
@@ -26,12 +26,12 @@ Ui* Ui_Create(Entity* player1, Entity* player2) {
 void Ui_Draw(Ui* this, Bitmap* surface) {
     if (this->player1Healthbar) {
         Entity_Draw(this->player1Healthbar->entity, surface);
-        DrawRLEBitmap(surface, &HealthbarIcon_Robo, this->player1Healthbar->entity->posX, this->player1Healthbar->entity->posY);
+        DrawRLEBitmap(surface, &HealthbarIcon_Robo, this->player1Healthbar->entity->posX - 25, this->player1Healthbar->entity->posY-5);
     }
     
     if (this->player2Healthbar) {
         Entity_Draw(this->player2Healthbar->entity, surface);
-        DrawRLEBitmap(surface, &HealthbarIcon_Prof, this->player2Healthbar->entity->posX, this->player2Healthbar->entity->posY);
+        DrawRLEBitmap(surface, &HealthbarIcon_Prof, this->player2Healthbar->entity->posX - 25, this->player2Healthbar->entity->posY -5);
     }
     
     if (this->storyboard) {
