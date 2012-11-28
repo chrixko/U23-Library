@@ -41,10 +41,7 @@ Player* Player_Create(int PlayerID)
 	}
 
 
-	player->currentAnimationIndex = PLAYER_ANIMATION_IDLE;
-	
-	player->health = 100;
-
+	player->currentAnimationIndex = PLAYER_ANIMATION_IDLE;	
 	
 	player->weapon = Weapon_Create(player->entity);
 	
