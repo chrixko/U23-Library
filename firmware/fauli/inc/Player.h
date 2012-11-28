@@ -14,10 +14,11 @@ typedef struct
 	Animation* animations[2];
 	int currentAnimationIndex;
 	int health;
+	int ID;
 	Weapon* weapon;
 } Player;
 
-Player* Player_Create();
+Player* Player_Create(int PlayerID);
 void Player_Update(void* player);
 void Player_Draw(void* player, Bitmap* surface);
 void Player_Destroy(void* player);

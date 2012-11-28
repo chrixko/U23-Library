@@ -13,7 +13,8 @@ LabScene* LabScene_Create()
 	ls->scene->update = LabScene_Update;
 	ls->scene->draw = LabScene_Draw;
 	
-	ls->firstPlayer = Player_Create();
+	ls->firstPlayer = NULL;
+	ls->secondPlayer = NULL;
 	
 	return ls;
 }
@@ -25,9 +26,12 @@ void LabScene_Init(void* labScene)
 	camera->posX = 0;
 	camera->posY = 0;
 	
-	s->firstPlayer = Player_Create();
-	s->ui = Ui_Create(s->firstPlayer->entity, NULL);
+	s->firstPlayer = Player_Create(1);
+	s->secondPlayer = Player_Create(2);
+	s->ui = Ui_Create(s->firstPlayer->entity, s->secondPlayer->entity);
 	Scene_AddEntity(s->scene, s->firstPlayer->entity);
+	Scene_AddEntity(s->scene, s->secondPlayer->entity);
+	
 	s->ui->storyboard = Storyboard_Create("Lorem ipsum dolor\n"
                                        "sit amet, consetetur\n"
                                        "sadipscing elitr,\n"

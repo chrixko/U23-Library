@@ -8,8 +8,9 @@
 #include "Bullet.h"
 #include "Healthpack.h"
 #include "Sprite_Robo.h"
+#include "Sprite_Prof.h"
 
-Player* Player_Create()
+Player* Player_Create(int PlayerID)
 {
 	Player* player = (Player*)malloc(sizeof(Player));
 	
@@ -27,12 +28,22 @@ Player* Player_Create()
 	player->entity->collisionType = COLLISION_TYPE_PLAYER;
 	player->entity->sceneCollision = true;
 	
-    player->animations[PLAYER_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
-    player->animations[PLAYER_ANIMATION_IDLE]    = Animation_Create("idle", 6, 11, 10);
+	if (player->ID == 1)
+	{
+		player->animations[PLAYER_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
+		player->animations[PLAYER_ANIMATION_IDLE]    = Animation_Create("idle", 6, 11, 10);
+	}
+	else
+	{
+		player->animations[PLAYER_ANIMATION_WALKING] = Animation_Create("walk_left", 4, 9, 10);
+		player->animations[PLAYER_ANIMATION_IDLE]    = Animation_Create("idle", 0, 3, 10);
+	}
+
 
 	player->currentAnimationIndex = PLAYER_ANIMATION_IDLE;
 	
 	player->health = 100;
+	player->ID = PlayerID;
 	
 	player->weapon = Weapon_Create(player->entity);
 	
@@ -41,8 +52,16 @@ Player* Player_Create()
 
 void _Player_processInput(Player* player)
 {
-	//TODO: Decide by PlayerType wether to poll State1 or 2
-	snes_button_state_t state = GetControllerState1();
+	snes_button_state_t state;
+	if (player->ID == 1)
+	{
+		state = GetControllerState1();	
+	}
+	else
+	{
+		state = GetControllerState2();
+	}
+	
 	
 	if(state.buttons.Up)
 	{
@@ -144,8 +163,15 @@ void Player_Draw(void* player, Bitmap* surface)
 	Player* p = player;
 	Animation* anim = _Player_getCurrentAnimation(p);
 	Animation_Play(anim);
+	if (p->ID == 1)
+	{
+		DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
+	}
+	else
+	{
+		DrawRLEBitmap(surface, Sprite_Prof[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
+	}
 	
-	DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
 }
 
 void Player_Destroy(void* player)

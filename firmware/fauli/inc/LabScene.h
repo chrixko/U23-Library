@@ -11,7 +11,7 @@ typedef struct
 	Ui* ui;
 	Scene* scene;
 	Player* firstPlayer;
-	//Player* secondPlayer;
+	Player* secondPlayer;
 	
 	
 } LabScene;
