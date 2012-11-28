@@ -27,6 +27,7 @@ Player* Player_Create(int PlayerID)
 	
 	player->entity->collisionType = COLLISION_TYPE_PLAYER;
 	player->entity->sceneCollision = true;
+	player->ID = PlayerID;
 	
 	if (player->ID == 1)
 	{
@@ -43,7 +44,7 @@ Player* Player_Create(int PlayerID)
 	player->currentAnimationIndex = PLAYER_ANIMATION_IDLE;
 	
 	player->health = 100;
-	player->ID = PlayerID;
+
 	
 	player->weapon = Weapon_Create(player->entity);
 	
