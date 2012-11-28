@@ -1,5 +1,5 @@
-
 #include "Ui.h"
+
 
 Ui* Ui_Create(Entity* player1, Entity* player2) {
     Ui* ui = malloc(sizeof(Ui));
@@ -26,10 +26,12 @@ Ui* Ui_Create(Entity* player1, Entity* player2) {
 void Ui_Draw(Ui* this, Bitmap* surface) {
     if (this->player1Healthbar) {
         Entity_Draw(this->player1Healthbar->entity, surface);
+        DrawRLEBitmap(surface, &HealthbarIcon_Robo, this->player1Healthbar->entity->posX, this->player1Healthbar->entity->posY);
     }
     
     if (this->player2Healthbar) {
         Entity_Draw(this->player2Healthbar->entity, surface);
+        DrawRLEBitmap(surface, &HealthbarIcon_Prof, this->player2Healthbar->entity->posX, this->player2Healthbar->entity->posY);
     }
     
     if (this->storyboard) {
