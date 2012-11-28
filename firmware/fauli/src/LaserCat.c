@@ -1,4 +1,5 @@
 #include "LaserCat.h"
+#include "ExplosionEntity.h"
 
 LaserCat* LaserCat_Create(Entity* target) {
     LaserCat* this = malloc(sizeof(LaserCat));
@@ -91,15 +92,16 @@ void LaserCat_Shoot(LaserCat* this) {
 bool LaserCat_Collision(void* laserCat, Entity* otherEntity) {
     LaserCat* this = laserCat;
     if (otherEntity->collisionType == COLLISION_TYPE_BULLET_PLAYER) {
-        
-        this->entity->health -= ((Bullet*)otherEntity->context)->damage;
-        
+		Bullet* b = otherEntity->context;
+		
+        this->entity->health -= b->damage;
+        Bullet_Explode(b);
+	        
         if(this->entity->health <= 0)
         {
 			this->entity->destroyed = true; //Die animation
 		}
-        
-        otherEntity->destroyed = true;
+                
         return true;
     }
     return false;

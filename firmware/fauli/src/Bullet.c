@@ -1,5 +1,6 @@
 
 #include "Bullet.h"
+#include "ExplosionEntity.h"
 #include <Projectile_Laser.h>
 
 Bullet* Bullet_Create(int collisionType) {
@@ -42,14 +43,17 @@ void Bullet_Destroy(void* bullet) {
     free(this);
 }
 
+void Bullet_Explode(void* bullet) {
+	Bullet* b = bullet;
+	ExplosionEntity* exp = ExplosionEntity_Create(b->entity->posX + (5 * b->entity->vX), b->entity->posY - 5);
+	Scene_AddEntity(currentScene, exp->entity);	
+	b->entity->destroyed = true;
+}
+
 bool Bullet_Collision(void* bullet, Entity* otherEntity) {
     Bullet* this = bullet;
-    Entity* other;
     
-    if (other->collisionType == COLLISION_TYPE_ENEMY) {
-        this->entity->destroyed = true;
-        return true;
-    }
+      
     return false;
 }
 
