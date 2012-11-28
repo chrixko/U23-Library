@@ -14,8 +14,8 @@ Bullet* Bullet_Create(int collisionType) {
     bullet->entity->width = 10;
     bullet->entity->height = 7;
     
-    bullet->damage = 1;
-    bullet->maxLifeTime = 200;
+    bullet->damage = 10;
+    bullet->maxLifeTime = 250;
     bullet->lifeTime = 0;
     
     return bullet;

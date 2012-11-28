@@ -13,7 +13,7 @@ typedef struct
 	Entity* entity;
 	Animation* animations[2];
 	int currentAnimationIndex;
-	int health;
+	//int health;
 	int ID;
 	Weapon* weapon;
 } Player;

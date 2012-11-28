@@ -17,8 +17,7 @@ LaserCat* LaserCat_Create(Entity* target) {
 	
     this->animations[LASERCAT_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
     this->animations[LASERCAT_ANIMATION_IDLE]    = Animation_Create("idle", 0, 0, 10);
-    this->currentAnimationIndex = LASERCAT_ANIMATION_IDLE;
-    
+    this->currentAnimationIndex = LASERCAT_ANIMATION_IDLE;        
     this->target = target;
     
     this->weapon = Weapon_Create(this->entity);
@@ -92,7 +91,15 @@ void LaserCat_Shoot(LaserCat* this) {
 bool LaserCat_Collision(void* laserCat, Entity* otherEntity) {
     LaserCat* this = laserCat;
     if (otherEntity->collisionType == COLLISION_TYPE_BULLET_PLAYER) {
-        this->entity->destroyed = true;
+        
+        this->entity->health -= ((Bullet*)otherEntity->context)->damage;
+        
+        if(this->entity->health <= 0)
+        {
+			this->entity->destroyed = true; //Die animation
+		}
+        
+        otherEntity->destroyed = true;
         return true;
     }
     return false;

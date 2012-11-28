@@ -12,7 +12,7 @@
 typedef struct {
 	Entity* entity;
 	Animation* animations[2];
-	int currentAnimationIndex;
+	int currentAnimationIndex;	
 	Weapon* weapon;
 	Entity* target;
 } LaserCat;
