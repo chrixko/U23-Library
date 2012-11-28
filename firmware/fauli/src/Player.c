@@ -30,12 +30,16 @@ Player* Player_Create(int PlayerID)
 	player->ID = PlayerID;
 	
 	if (player->ID == 1)
-	{
+	{		
+		player->entity->width = 40;
+		player->entity->height = 65;	
 		player->animations[PLAYER_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
 		player->animations[PLAYER_ANIMATION_IDLE]    = Animation_Create("idle", 6, 11, 10);
 	}
 	else
 	{
+		player->entity->width = 35;
+		player->entity->height = 65;		
 		player->animations[PLAYER_ANIMATION_WALKING] = Animation_Create("walk_left", 4, 9, 10);
 		player->animations[PLAYER_ANIMATION_IDLE]    = Animation_Create("idle", 0, 3, 10);
 	}
@@ -141,7 +145,10 @@ bool Player_Collision(void* context, Entity* other) {
     
     switch (other->collisionType) {
         case COLLISION_TYPE_BULLET_ENEMY: {
-            this->entity->health -= ((Bullet*)other->context)->damage;        
+			Bullet* b = other->context;
+            this->entity->health -= b->damage;
+            Bullet_Explode(b);
+                    
             break;
         }
         case COLLISION_TYPE_HEALTHPACK_ROBOT: {
