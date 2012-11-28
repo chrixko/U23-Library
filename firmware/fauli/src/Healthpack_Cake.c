@@ -1,7 +1,7 @@
 #include <RLEBitmap.h>
 
-const RLEBitmap * const Healthpack_Cake=
-(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(119,14,6)]; }){
+const struct { RLEBitmap rle; Pixel codes[RLECodeCount(119,14,6)];} Healthpack_Cake= 
+{
 	{ 12,13 },
 	{
 		RLECode(0x08,0x04), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
