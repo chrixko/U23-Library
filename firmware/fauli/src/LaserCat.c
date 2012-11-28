@@ -18,6 +18,8 @@ LaserCat* LaserCat_Create(Entity* target) {
 	
     this->animations[LASERCAT_ANIMATION_WALKING] = Animation_Create("walk_left", 0, 5, 10);
     this->animations[LASERCAT_ANIMATION_IDLE]    = Animation_Create("idle", 0, 0, 10);
+    this->animations[LASERCAT_ANIMATION_DYING]	 = Animation_Create("dying", 6, 8, 10);
+    
     this->currentAnimationIndex = LASERCAT_ANIMATION_IDLE;        
     this->target = target;
     
@@ -25,11 +27,17 @@ LaserCat* LaserCat_Create(Entity* target) {
     this->weapon->bulletSpeedX = -1;
     this->weapon->cooldownTime = 200;
     
+    this->dead = false;
+    
     return this;
 }
 
 void LaserCat_Update(void* laserCat) {
     LaserCat* this = laserCat;
+    
+    if(this->dead) {
+		return;
+	}
     
     if (this->target) {
         if (this->target->destroyed) {
@@ -69,14 +77,24 @@ void LaserCat_Update(void* laserCat) {
 }
 
 void LaserCat_Draw(void* laserCat, Bitmap* surface) {
-    LaserCat* this = laserCat;
-    DrawRLEBitmap(surface, Sprite_LaserCat[this->currentAnimationIndex], this->entity->posX - camera->posX, this->entity->posY);
+    LaserCat* this = laserCat;    
+    
+    Animation* anim = this->animations[this->currentAnimationIndex];      
+    if(this->currentAnimationIndex == LASERCAT_ANIMATION_DYING && anim->currentFrameIndex >= anim->endIndex)
+    {
+		this->entity->destroyed = true;
+	}
+    Animation_Play(anim);
+                
+    DrawRLEBitmap(surface, Sprite_LaserCat[anim->currentFrameIndex], this->entity->posX - camera->posX, this->entity->posY);
 }
 
 void LaserCat_Destroy(void* laserCat) {
     LaserCat* this = laserCat;
     Animation_Destroy(this->animations[0]);
     Animation_Destroy(this->animations[1]);
+    Animation_Destroy(this->animations[2]);
+    
     if (this->weapon) {
         Entity_Destroy(this->weapon->entity);
     }
@@ -89,6 +107,11 @@ void LaserCat_Shoot(LaserCat* this) {
     }
 }
 
+void LaserCat_Die(LaserCat* this) {
+	this->dead = true;
+	this->currentAnimationIndex = LASERCAT_ANIMATION_DYING;
+}
+
 bool LaserCat_Collision(void* laserCat, Entity* otherEntity) {
     LaserCat* this = laserCat;
     if (otherEntity->collisionType == COLLISION_TYPE_BULLET_PLAYER) {
@@ -99,7 +122,7 @@ bool LaserCat_Collision(void* laserCat, Entity* otherEntity) {
 	        
         if(this->entity->health <= 0)
         {
-			this->entity->destroyed = true; //Die animation
+			LaserCat_Die(this); //Die animation
 		}
                 
         return true;
