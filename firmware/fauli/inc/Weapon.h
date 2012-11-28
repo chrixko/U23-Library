@@ -14,6 +14,10 @@ typedef struct {
     unsigned int bulletSpread;
     unsigned int cooldownTime;
     unsigned int cooldownTimer;
+    
+    int offsetX;
+    int offsetY;
+    
     Entity* entity;
     Entity* wielder; // Entity using the weapon
 } Weapon;

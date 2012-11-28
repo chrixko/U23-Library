@@ -14,8 +14,6 @@ Entity* Entity_Create(void* context)
 	entity->scrollY = 1;
 	entity->width = 0;
 	entity->height = 0;
-	entity->offsetX = 0;
-	entity->offsetY = 0;	
 	
 	entity->health = 100;
 	entity->maxHealth = 100;

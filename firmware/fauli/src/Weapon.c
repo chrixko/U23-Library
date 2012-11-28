@@ -9,6 +9,8 @@ Weapon* Weapon_Create(Entity* wielder) {
     weapon->entity->draw = Weapon_Draw;
     weapon->wielder = wielder;
     
+    weapon->offsetX = weapon->offsetY = 0;
+    
     weapon->rotation = 0.f;
     weapon->bulletSpeedX = 3;
     weapon->bulletSpeedY = 0;
@@ -69,8 +71,8 @@ void Weapon_Update(void* weapon) {
 
     // sync position with wielding entity
     if (this->wielder) {
-        this->entity->posX = this->wielder->posX;
-        this->entity->posY = this->wielder->posY;
+        this->entity->posX = this->wielder->posX + this->offsetX;
+        this->entity->posY = this->wielder->posY + this->offsetY;
     }
 }
 

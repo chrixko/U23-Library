@@ -18,10 +18,8 @@ struct Entity
 	int scrollX;
 	int scrollY;
 	
-	int width;
-	int offsetX;
+	int width;	
 	int height;
-	int offsetY;	
 	
 	int health;
 	int maxHealth;
