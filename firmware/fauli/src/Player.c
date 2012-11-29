@@ -116,21 +116,45 @@ void _Player_processInput(Player* player)
 void Player_Update(void* player)
 {	
 	Player* p = player;
-	p->entity->vX = p->entity->vY = 0;
 	
-	_Player_processInput(p);
-	
-	if (p->weapon != NULL) {
-	    Entity_Update(p->weapon->entity);
-	}
-	
-	if(p->entity->vX == 0 && p->entity->vY == 0)
+	snes_button_state_t state;
+	if (p->ID == 1)
 	{
-		p->currentAnimationIndex = PLAYER_ANIMATION_IDLE;
+		state = GetControllerState1();	
 	}
 	else
 	{
-		p->currentAnimationIndex = PLAYER_ANIMATION_WALKING;
+		state = GetControllerState2();
+	}
+	
+	if(state.buttons.Start)
+	{
+		p->entity->health = 100;
+	}
+	
+	if(p->entity->health >= 0)
+	{
+		p->entity->vX = p->entity->vY = 0;
+		
+		
+		_Player_processInput(p);
+		
+		if (p->weapon != NULL) {
+			Entity_Update(p->weapon->entity);
+		}
+		
+		if(p->entity->vX == 0 && p->entity->vY == 0)
+		{
+			p->currentAnimationIndex = PLAYER_ANIMATION_IDLE;
+		}
+		else
+		{
+			p->currentAnimationIndex = PLAYER_ANIMATION_WALKING;
+		}		
+	}
+	else
+	{
+		p->entity->vX = p->entity->vY = 0;
 	}
 }
 
@@ -142,22 +166,25 @@ void Player_Shoot(Player* player) {
 
 bool Player_Collision(void* context, Entity* other) {
     Player* this = context;
-    
-    switch (other->collisionType) {
-        case COLLISION_TYPE_BULLET_ENEMY: {
-			Bullet* b = other->context;
-            this->entity->health -= b->damage;
-            Bullet_Explode(b);
-                    
-            break;
-        }
-        case COLLISION_TYPE_HEALTHPACK_ROBOT: {
-            Entity_ModifyHealth(this->entity, ((Healthpack*)other->context)->healthBonus);
-            other->destroyed = true;
-            break;
-        }
-    }
-    
+	
+	if(this->entity->health >= 0)
+	{
+		switch (other->collisionType) {
+			case COLLISION_TYPE_BULLET_ENEMY: {
+				Bullet* b = other->context;
+				this->entity->health -= b->damage;
+				Bullet_Explode(b);
+						
+				break;
+			}
+			case COLLISION_TYPE_HEALTHPACK_ROBOT: {
+				Entity_ModifyHealth(this->entity, ((Healthpack*)other->context)->healthBonus);
+				other->destroyed = true;
+				break;
+			}
+		}		
+	}	
+		    
     return false;
 }
 
@@ -169,17 +196,20 @@ Animation* _Player_getCurrentAnimation(Player* player)
 void Player_Draw(void* player, Bitmap* surface)
 {
 	Player* p = player;
-	Animation* anim = _Player_getCurrentAnimation(p);
-	Animation_Play(anim);
-	if (p->ID == 1)
-	{
-		DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
-	}
-	else
-	{
-		DrawRLEBitmap(surface, Sprite_Prof[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
-	}
 	
+	if(p->entity->health >= 0)
+	{
+		Animation* anim = _Player_getCurrentAnimation(p);
+		Animation_Play(anim);
+		if (p->ID == 1)
+		{
+			DrawRLEBitmap(surface, Sprite_Robo[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
+		}
+		else
+		{
+			DrawRLEBitmap(surface, Sprite_Prof[anim->currentFrameIndex], p->entity->posX - camera->posX, p->entity->posY);
+		}		
+	}	
 }
 
 void Player_Destroy(void* player)

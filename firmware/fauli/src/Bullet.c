@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "ExplosionEntity.h"
 #include <Projectile_Laser.h>
+#include "Projectile_Big.h"
 
 Bullet* Bullet_Create(int collisionType) {
     Bullet* bullet = malloc(sizeof(Bullet));
@@ -12,8 +13,16 @@ Bullet* Bullet_Create(int collisionType) {
     bullet->entity->collision = Bullet_Collision;
     bullet->entity->collisionType = collisionType;
     
-    bullet->entity->width = 10;
-    bullet->entity->height = 7;
+    if(collisionType == COLLISION_TYPE_BULLET_PLAYER)
+    {
+		bullet->entity->width = 6;
+		bullet->entity->height = 4;
+	}
+	else
+	{
+		bullet->entity->width = 10;
+		bullet->entity->height = 7;		
+	}
     
     bullet->damage = 10;
     bullet->maxLifeTime = 250;
@@ -34,8 +43,14 @@ void Bullet_Update(void* bullet) {
 
 void Bullet_Draw(void* bullet, Bitmap* surface) {
     Bullet* this = (Bullet*)bullet;
-    
-    DrawRLEBitmap(surface, &Projectile_Laser, this->entity->posX - camera->posX, this->entity->posY);
+	if(this->entity->collisionType == COLLISION_TYPE_BULLET_ENEMY)
+	{
+		DrawRLEBitmap(surface, &Projectile_Laser, this->entity->posX - camera->posX, this->entity->posY);
+	}
+	else
+	{
+		DrawRLEBitmap(surface, &Projectile_Big, this->entity->posX - camera->posX, this->entity->posY);
+	}    
 }
 
 void Bullet_Destroy(void* bullet) {

@@ -1,5 +1,7 @@
 #include "LaserCat.h"
 #include "ExplosionEntity.h"
+#include "Healthpack.h"
+#include "Utils.h"
 
 LaserCat* LaserCat_Create(Entity* target) {
     LaserCat* this = malloc(sizeof(LaserCat));
@@ -26,7 +28,7 @@ LaserCat* LaserCat_Create(Entity* target) {
     
     _LaserCat_CalculateTargetPosition(this);
     
-    this->entity->health = 30;
+    this->entity->health = 60;
     
     this->weapon = Weapon_Create(this->entity);
     this->weapon->bulletSpeedX = -2;
@@ -95,6 +97,15 @@ void LaserCat_Draw(void* laserCat, Bitmap* surface) {
     Animation* anim = this->animations[this->currentAnimationIndex];      
     if(this->currentAnimationIndex == LASERCAT_ANIMATION_DYING && anim->currentFrameIndex >= anim->endIndex)
     {
+		if(randomInRange(0, 100) < 30)
+		{
+			Healthpack* hp = Healthpack_Create(COLLISION_TYPE_HEALTHPACK_ROBOT);
+			hp->entity->posX = this->entity->posX + 10;
+			hp->entity->posY = this->entity->posY + 10;
+		
+			Scene_AddEntity(currentScene, hp->entity);			
+		}
+		
 		this->entity->destroyed = true;
 	}
     Animation_Play(anim);

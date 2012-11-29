@@ -32,13 +32,13 @@ void LabScene_Init(void* labScene)
 	Scene_AddEntity(s->scene, s->firstPlayer->entity);
 	Scene_AddEntity(s->scene, s->secondPlayer->entity);
 	
-	s->ui->storyboard = Storyboard_Create("Lorem ipsum dolor\n"
-                                       "sit amet, consetetur\n"
-                                       "sadipscing elitr,\n"
-                                       "ed diam nonumy,\n"
+	s->ui->storyboard = Storyboard_Create("Welcome to our game!\n"
+                                       "bla bla lorem ipsum\n"
+                                       "sit amet\n"
+                                       "\n"
                                        "\n"
                                        "press the A Button to continue...\n");
-    s->ui->storyboard->next = Storyboard_Create("this is a second storyboard\n\n"
+    s->ui->storyboard->next = Storyboard_Create("if you die press START\n\n"
                                             "press the A Button to continue...\n");
 	
 	Healthpack* h = Healthpack_Create(COLLISION_TYPE_HEALTHPACK_ROBOT);
