@@ -30,7 +30,7 @@ LaserCat* LaserCat_Create(Entity* target) {
     
     this->weapon = Weapon_Create(this->entity);
     this->weapon->bulletSpeedX = -2;
-    this->weapon->cooldownTime = 200;
+    this->weapon->cooldownTime = 100;
     
     this->dead = false;
     
