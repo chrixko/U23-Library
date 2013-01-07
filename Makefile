@@ -1,21 +1,22 @@
-ROOT := $(PWD)
-include $(ROOT)/build/base.mak
+# Target file name.
+TARGET = fauli
 
-FIRMWARE ?= gametest
+# List C source files here.
+CCSOURCES = Game.c Entity.c Player.c Animation.c Vector.c Camera.c Weapon.c Bullet.c Ui.c Healthbar.c Storyboard.c Scene.c LabScene.c Fonts.c Sprite_Robo.c Background_Lab.c Sprite_LaserCat.c Storyboard_Back.c Healthpack.c LaserCat.c TriggerArea.c Utils.c Healthpack_Battery.c Healthpack_Cake.c Projectile_Small.c Projectile_Big.c Projectile_Laser.c Explosion.c Sprite_Prof.c HealthbarIcon_Robo.c HealthbarIcon_Prof.c ExplosionEntity.c
 
-SUBDIRS = libs firmware
+# Additional local static libs to link against
+LIBS = gaming system stm32f4xx fatfs sdcard graphics
 
-STARTTIME := $(shell date +%s)
-# Main targets
-all:
-	$(call cmd_msg,NOTICE,Build completed in $$(($$(date +%s)-$(STARTTIME))) seconds)
+# Folder for object files
+OBJDIR = obj
 
-distclean: clean
+# Folder for sourcecode
+SRCDIR = src
 
-upload: upload-$(FIRMWARE)
-upload-gdb: upload-gdb-$(FIRMWARE)
-debug-gdb: debug-gdb-$(FIRMWARE) 
+# Additional defines
+DEFINES := -DRGB8Pixels
 
-include $(addsuffix /Makefile,$(SUBDIRS))
+# Root dir (enables use for different target/folder names)
+TARGET_ROOT_DIR := $(SELF_DIR)
 
-.PHONY: all upload clean distclean
+-include $(ROOT)/build/firmware.mak
